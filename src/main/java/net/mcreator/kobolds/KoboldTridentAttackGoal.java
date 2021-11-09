@@ -1,11 +1,11 @@
-package net.mcreator.kobolds;
+package net.mcreator.kobolds.goal;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 
-import net.mcreator.kobolds.AbstractKoboldEntity;
+import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 public class KoboldTridentAttackGoal extends RangedAttackGoal {
 	private final AbstractKoboldEntity field_204728_a;

@@ -1,4 +1,4 @@
-package net.mcreator.kobolds;
+package net.mcreator.kobolds.goal;
 
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.InteractionHand;
 
-import net.mcreator.kobolds.AbstractKoboldEntity;
+import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 public class KoboldShieldGoal extends Goal {
 	public final AbstractKoboldEntity kobold;

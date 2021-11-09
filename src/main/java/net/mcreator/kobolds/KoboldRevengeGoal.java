@@ -1,7 +1,7 @@
-package net.mcreator.kobolds;
+package net.mcreator.kobolds.goal;
 
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.mcreator.kobolds.AbstractKoboldEntity;
+import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 public class KoboldRevengeGoal extends HurtByTargetGoal {
 	public KoboldRevengeGoal(AbstractKoboldEntity kobold) {

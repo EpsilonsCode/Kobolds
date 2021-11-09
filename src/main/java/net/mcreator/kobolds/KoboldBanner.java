@@ -1,4 +1,4 @@
-package net.mcreator.kobolds;
+package net.mcreator.kobolds.item;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

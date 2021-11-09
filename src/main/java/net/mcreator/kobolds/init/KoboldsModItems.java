@@ -20,7 +20,6 @@ import net.mcreator.kobolds.item.KoboldPotionLeapingItem;
 import net.mcreator.kobolds.item.KoboldPotionHealthItem;
 import net.mcreator.kobolds.item.KoboldPotionFireItem;
 import net.mcreator.kobolds.item.KoboldPotionCombatItem;
-import net.mcreator.kobolds.item.KoboldNetheriteSwordItem;
 import net.mcreator.kobolds.item.KoboldIronSwordItem;
 import net.mcreator.kobolds.item.KoboldIronShovelItem;
 import net.mcreator.kobolds.item.KoboldIronPickaxeItem;
@@ -40,7 +39,6 @@ public class KoboldsModItems {
 	public static final Item KOBOLD_POTION_LEAPING = register(new KoboldPotionLeapingItem());
 	public static final Item KOBOLD_POTION_LEVITATION = register(new KoboldPotionLevitationItem());
 	public static final Item KOBOLD_BLOCK_SKULL = register(KoboldsModBlocks.KOBOLD_BLOCK_SKULL, KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB);
-	public static final Item KOBOLD_NETHERITE_SWORD = register(new KoboldNetheriteSwordItem());
 	public static final Item KOBOLD_IRON_SWORD = register(new KoboldIronSwordItem());
 	public static final Item KOBOLD_IRON_PICKAXE = register(new KoboldIronPickaxeItem());
 	public static final Item KOBOLD_IRON_AXE = register(new KoboldIronAxeItem());

@@ -15,6 +15,7 @@ import net.minecraft.world.item.BlockItem;
 
 import net.mcreator.kobolds.item.KoboldPotionWaterItem;
 import net.mcreator.kobolds.item.KoboldPotionStealthItem;
+import net.mcreator.kobolds.item.KoboldPotionMiningItem;
 import net.mcreator.kobolds.item.KoboldPotionLevitationItem;
 import net.mcreator.kobolds.item.KoboldPotionLeapingItem;
 import net.mcreator.kobolds.item.KoboldPotionHealthItem;
@@ -38,6 +39,7 @@ public class KoboldsModItems {
 	public static final Item KOBOLD_POTION_WATER = register(new KoboldPotionWaterItem());
 	public static final Item KOBOLD_POTION_LEAPING = register(new KoboldPotionLeapingItem());
 	public static final Item KOBOLD_POTION_LEVITATION = register(new KoboldPotionLevitationItem());
+	public static final Item KOBOLD_POTION_MINING = register(new KoboldPotionMiningItem());
 	public static final Item KOBOLD_BLOCK_SKULL = register(KoboldsModBlocks.KOBOLD_BLOCK_SKULL, KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB);
 	public static final Item KOBOLD_IRON_SWORD = register(new KoboldIronSwordItem());
 	public static final Item KOBOLD_IRON_PICKAXE = register(new KoboldIronPickaxeItem());

@@ -2,11 +2,14 @@ package net.mcreator.kobolds.entity;
 
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -23,21 +26,34 @@ import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.nbt.CompoundTag;
 
-import net.mcreator.kobolds.goal.KoboldShieldGoal;
+import net.mcreator.kobolds.procedures.KoboldSpawnProcedure;
+import net.mcreator.kobolds.procedures.KoboldDeathProcedure;
+import net.mcreator.kobolds.procedures.KoboldBaseTickProcedure;
 import net.mcreator.kobolds.goal.KoboldTridentAttackGoal;
+import net.mcreator.kobolds.goal.KoboldShieldGoal;
 import net.mcreator.kobolds.goal.KoboldRevengeGoal;
+
+import javax.annotation.Nullable;
+
+import com.google.common.collect.ImmutableMap;
 
 public abstract class AbstractKoboldEntity extends Monster implements CrossbowAttackMob, RangedAttackMob {
 	protected AbstractKoboldEntity(EntityType<? extends Monster> type, Level world) {
@@ -74,16 +90,16 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		if (this.getMainHandItem().getItem() instanceof CrossbowItem) {
 			this.performCrossbowAttack(this, 6.0F);
-			//	} else if (this.getHeldItemOffhand().getItem() instanceof TridentItem) {
-			//		TridentEntity tridententity = new TridentEntity(this.world, this, new ItemStack(Items.TRIDENT));
-			//		double d0 = target.getPosX() - this.getPosX();
-			//		double d1 = target.getPosYHeight(0.3333333333333333D) - tridententity.getPosY();
-			//		double d2 = target.getPosZ() - this.getPosZ();
-			//		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-			//		tridententity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
-			//		this.playSound(SoundEvents.ENTITY_DROWNED_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-			//		this.world.addEntity(tridententity);
-			//		this.getPersistentData().putDouble("TimerTrident", 1200);
+		} else if (this.getOffhandItem().getItem() instanceof TridentItem) {
+			ThrownTrident trident = new ThrownTrident(this.level, this, new ItemStack(Items.TRIDENT));
+			double d0 = target.getX() - this.getX();
+			double d1 = target.getY(0.3333333333333333D) - trident.getY();
+			double d2 = target.getZ() - this.getZ();
+			double d3 = (double) Mth.sqrt((float) (d0 * d0 + d2 * d2));
+			trident.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
+			this.playSound(SoundEvents.DROWNED_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+			this.level.addFreshEntity(trident);
+			this.getPersistentData().putDouble("TimerTrident", 1200);
 		}
 	}
 
@@ -129,10 +145,10 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
 		if (this.isBlocking()) {
-            return SoundEvents.SHIELD_BLOCK;
-        } else {
+			return SoundEvents.SHIELD_BLOCK;
+		} else {
 			return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_hurt"));
-        }
+		}
 	}
 
 	@Override
@@ -141,15 +157,56 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 	}
 
 	@Override
+	public void die(DamageSource source) {
+		super.die(source);
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity sourceentity = source.getEntity();
+		Entity entity = this;
+		Level world = this.level;
+		KoboldDeathProcedure
+				.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("sourceentity", sourceentity).put("world", world).build());
+	}
+
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
+			@Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		KoboldSpawnProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).build());
+		return retval;
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		Level world = this.level;
+		KoboldBaseTickProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
+	}
+
+	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof AbstractArrow)
-			return false;
-		if (source.getMsgId().equals("trident"))
-			return false;
+		if (source.getDirectEntity() instanceof AbstractArrow) {
+			AbstractArrow arrow = (AbstractArrow) source.getDirectEntity();
+			if (arrow.getOwner() instanceof AbstractKoboldEntity) {
+				return false;
+			}
+		} else if (source.getDirectEntity() instanceof ThrownTrident) {
+			ThrownTrident trident = (ThrownTrident) source.getDirectEntity();
+			if (trident.getOwner() instanceof AbstractKoboldEntity) {
+				return false;
+			}
+		}
 		if (source == DamageSource.IN_FIRE)
 			return false;
 		return super.hurt(source, amount);
-		//I updated these checks partial. For the trident and arrow check, there is suppose to be a secondary check to see if the trident/arrow was from a kobold to make them immune to their own projectiles.
-		//Currently, they are immune to all tridents and arrows base on this above code.
 	}
 }

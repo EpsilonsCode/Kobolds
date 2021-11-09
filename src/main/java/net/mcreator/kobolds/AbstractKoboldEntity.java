@@ -1,4 +1,4 @@
-package net.mcreator.kobolds;
+package net.mcreator.kobolds.entity;
 
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
@@ -35,9 +35,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.Packet;
 
-import net.mcreator.kobolds.KoboldShieldGoal;
-import net.mcreator.kobolds.KoboldTridentAttackGoal;
-import net.mcreator.kobolds.KoboldRevengeGoal;
+import net.mcreator.kobolds.goal.KoboldShieldGoal;
+import net.mcreator.kobolds.goal.KoboldTridentAttackGoal;
+import net.mcreator.kobolds.goal.KoboldRevengeGoal;
 
 public abstract class AbstractKoboldEntity extends Monster implements CrossbowAttackMob, RangedAttackMob {
 	protected AbstractKoboldEntity(EntityType<? extends Monster> type, Level world) {

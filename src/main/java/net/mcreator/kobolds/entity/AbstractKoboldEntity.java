@@ -16,6 +16,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
@@ -58,6 +59,9 @@ import com.google.common.collect.ImmutableMap;
 public abstract class AbstractKoboldEntity extends Monster implements CrossbowAttackMob, RangedAttackMob {
 	protected AbstractKoboldEntity(EntityType<? extends Monster> type, Level world) {
 		super(type, world);
+		xpReward = 4;
+		setNoAi(false);
+		setPersistenceRequired();
 		((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
 	}
 
@@ -162,11 +166,13 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
-		Entity sourceentity = source.getEntity();
 		Entity entity = this;
 		Level world = this.level;
-		KoboldDeathProcedure
-				.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("sourceentity", sourceentity).put("world", world).build());
+
+		if (source.getDirectEntity() instanceof Zombie) {
+			Zombie zombie = (Zombie) source.getDirectEntity();
+			KoboldDeathProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("sourceentity", zombie).put("world", world).build());
+		}
 	}
 
 	@Override

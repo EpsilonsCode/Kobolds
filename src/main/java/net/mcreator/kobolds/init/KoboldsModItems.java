@@ -33,6 +33,9 @@ import java.util.ArrayList;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class KoboldsModItems {
 	private static final List<Item> REGISTRY = new ArrayList<>();
+	public static final Item KOBOLD = register(
+			new SpawnEggItem(KoboldsModEntities.KOBOLD, -10066330, -6684775, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("kobold_spawn_egg"));
 	public static final Item KOBOLD_POTION_HEALTH = register(new KoboldPotionHealthItem());
 	public static final Item KOBOLD_POTION_FIRE = register(new KoboldPotionFireItem());
 	public static final Item KOBOLD_POTION_STEALTH = register(new KoboldPotionStealthItem());
@@ -46,9 +49,6 @@ public class KoboldsModItems {
 	public static final Item KOBOLD_IRON_PICKAXE = register(new KoboldIronPickaxeItem());
 	public static final Item KOBOLD_IRON_AXE = register(new KoboldIronAxeItem());
 	public static final Item KOBOLD_IRON_SHOVEL = register(new KoboldIronShovelItem());
-	public static final Item KOBOLD = register(
-			new SpawnEggItem(KoboldsModEntities.KOBOLD, -10066330, -6684775, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
-					.setRegistryName("kobold_spawn_egg"));
 
 	private static Item register(Item item) {
 		REGISTRY.add(item);

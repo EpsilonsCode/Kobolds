@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.RegistryEvent;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.BlockItem;
@@ -45,6 +46,9 @@ public class KoboldsModItems {
 	public static final Item KOBOLD_IRON_PICKAXE = register(new KoboldIronPickaxeItem());
 	public static final Item KOBOLD_IRON_AXE = register(new KoboldIronAxeItem());
 	public static final Item KOBOLD_IRON_SHOVEL = register(new KoboldIronShovelItem());
+	public static final Item KOBOLD = register(
+			new SpawnEggItem(KoboldsModEntities.KOBOLD, -10066330, -6684775, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("kobold_spawn_egg"));
 
 	private static Item register(Item item) {
 		REGISTRY.add(item);

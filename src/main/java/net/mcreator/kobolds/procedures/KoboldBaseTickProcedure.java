@@ -10,6 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
@@ -18,10 +20,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.Minecraft;
 
 import net.mcreator.kobolds.init.KoboldsModItems;
+import net.mcreator.kobolds.init.KoboldsModEntities;
+import net.mcreator.kobolds.entity.KoboldEntity;
 import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Random;
@@ -239,7 +244,17 @@ public class KoboldBaseTickProcedure {
 		if (entity.getPersistentData().getDouble("TimerHeal") > 0) {
 			entity.getPersistentData().putDouble("TimerHeal", (entity.getPersistentData().getDouble("TimerHeal") - 1));
 		}
-		if (entity.getPersistentData().getDouble("TimerApple") > 0) {
+		if (entity.getPersistentData().getDouble("TimerApple") == 12000) {
+			if (world instanceof ServerLevel _level) {
+				Entity entityToSpawn = new KoboldEntity(KoboldsModEntities.KOBOLD, _level);
+				entityToSpawn.moveTo((entity.getX()), (entity.getY()), (entity.getZ()), world.getRandom().nextFloat() * 360F, 0);
+				if (entityToSpawn instanceof Mob _mobToSpawn)
+					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
+							null);
+				world.addFreshEntity(entityToSpawn);
+			}
+			entity.getPersistentData().putDouble("TimerApple", (entity.getPersistentData().getDouble("TimerApple") - 1));
+		} else if (entity.getPersistentData().getDouble("TimerApple") > 0) {
 			entity.getPersistentData().putDouble("TimerApple", (entity.getPersistentData().getDouble("TimerApple") - 1));
 		}
 		if (entity.getPersistentData().getDouble("TimerTrident") > 1) {

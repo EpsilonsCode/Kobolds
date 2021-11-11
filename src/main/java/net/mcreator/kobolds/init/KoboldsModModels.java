@@ -4,6 +4,7 @@
  */
 package net.mcreator.kobolds.init;
 
+import net.mcreator.kobolds.client.model.TestModelKobold;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -15,6 +16,6 @@ import net.mcreator.kobolds.client.model.ModelKobold;
 public class KoboldsModModels {
 	@SubscribeEvent
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(ModelKobold.LAYER_LOCATION, ModelKobold::createBodyLayer);
+		event.registerLayerDefinition(ModelKobold.LAYER_LOCATION, TestModelKobold::createBodyLayer);
 	}
 }

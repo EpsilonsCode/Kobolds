@@ -11,20 +11,14 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.RenderType;
 
 import net.mcreator.kobolds.entity.KoboldEntity;
+
 import net.mcreator.kobolds.client.model.ModelKobold;
 import net.minecraft.world.entity.Mob;
 
 public class KoboldRenderer extends HumanoidMobRenderer<Mob, TestModelKobold<Mob>> {
 	public KoboldRenderer(EntityRendererProvider.Context context) {
 		super(context, new TestModelKobold(context.bakeLayer(ModelKobold.LAYER_LOCATION)), 0.36f);
-		/*this.addLayer(new EyesLayer<KoboldEntity, ModelKobold<KoboldEntity>>(this) {
-			@Override
-			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("kobolds:textures/kobold_glow.png"));
-			}
-		});
 
-		 */
 	}
 
 	@Override

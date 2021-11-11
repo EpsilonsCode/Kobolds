@@ -15,16 +15,11 @@ import net.minecraft.client.model.EntityModel;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-// Made with Blockbench 4.0.4
-// Exported for Minecraft version 1.17 with Mojang mappings
-// Paste this class into your mod and generate all required imports
-public class ModelKobold<T extends Entity> extends EntityModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in
-	// the entity renderer and passed into this model's constructor
+public class KoboldModel<T extends Entity> extends EntityModel<T> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("kobolds", "kobold"), "main");
 	public final ModelPart body;
 
-	public ModelKobold(ModelPart root) {
+	public KoboldModel(ModelPart root) {
 		this.body = root.getChild("body");
 	}
 
@@ -34,7 +29,7 @@ public class ModelKobold<T extends Entity> extends EntityModel<T> {
 		PartDefinition body = partdefinition.addOrReplaceChild("body",
 				CubeListBuilder.create().texOffs(3, 15).addBox(-3.0F, -10.0F, -2.0F, 6.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(0.5F, 14.0F, 0.0F));
-		PartDefinition tail_r1 = body.addOrReplaceChild("tail_r1",
+		PartDefinition tail = body.addOrReplaceChild("tail",
 				CubeListBuilder.create().texOffs(24, 15).addBox(-1.0F, -3.0F, 2.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.6109F, 0.0F, 0.0F));
 		PartDefinition head = body.addOrReplaceChild("head",
@@ -42,10 +37,10 @@ public class ModelKobold<T extends Entity> extends EntityModel<T> {
 						.addBox(-2.5F, -3.0F, -6.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)).texOffs(1, 3)
 						.addBox(-0.5F, -3.85F, -5.5F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(0.0F, -10.0F, -0.5F));
-		PartDefinition lefthorn_r1 = head.addOrReplaceChild("lefthorn_r1",
+		PartDefinition lefthorn = head.addOrReplaceChild("lefthorn",
 				CubeListBuilder.create().texOffs(36, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(2.0F, -7.0F, 2.0F, -0.6109F, 0.3054F, 0.1745F));
-		PartDefinition righthorn_r1 = head.addOrReplaceChild("righthorn_r1",
+		PartDefinition righthorn = head.addOrReplaceChild("righthorn",
 				CubeListBuilder.create().texOffs(45, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(-2.0F, -7.0F, 2.0F, -0.6109F, -0.3054F, -0.1745F));
 		PartDefinition rightarm = body.addOrReplaceChild("rightarm",
@@ -61,6 +56,12 @@ public class ModelKobold<T extends Entity> extends EntityModel<T> {
 				CubeListBuilder.create().texOffs(0, 31).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(1.5F, 0.0F, 0.0F));
 		return LayerDefinition.create(meshdefinition, 64, 64);
+	}
+
+	public void setRotateAngle(ModelPart ModelRenderer, float x, float y, float z) {
+		ModelRenderer.xRot = x;
+		ModelRenderer.yRot = y;
+		ModelRenderer.zRot = z;
 	}
 
 	@Override

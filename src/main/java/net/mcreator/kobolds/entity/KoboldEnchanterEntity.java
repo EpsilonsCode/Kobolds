@@ -1,4 +1,4 @@
-package net.mcreator.kobolds.entity;
+package net.mcreator.kobolds.entity;
 
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 

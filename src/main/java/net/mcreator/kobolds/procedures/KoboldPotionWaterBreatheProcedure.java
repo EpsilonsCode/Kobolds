@@ -11,15 +11,10 @@ import java.util.Map;
 
 public class KoboldPotionWaterBreatheProcedure {
 	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldPotionWaterBreathe!");
-			return;
-		}
 		Entity entity = (Entity) dependencies.get("entity");
 		if (entity.isAlive()) {
-			if (entity instanceof LivingEntity _entity)
-				_entity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 2700, 0));
+			if (entity instanceof LivingEntity livingentity)
+				livingentity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 2700, 0));
 		}
 	}
 }

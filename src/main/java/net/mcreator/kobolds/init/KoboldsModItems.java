@@ -36,6 +36,10 @@ public class KoboldsModItems {
 	public static final Item KOBOLD = register(
 			new SpawnEggItem(KoboldsModEntities.KOBOLD, -10066330, -6684775, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
 					.setRegistryName("kobold_spawn_egg"));
+	public static final Item KOBOLD_WARRIOR = register(new SpawnEggItem(KoboldsModEntities.KOBOLD_WARRIOR, -10066330, -16738048,
+			new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB)).setRegistryName("kobold_warrior_spawn_egg"));
+	public static final Item KOBOLD_ENCHANTER = register(new SpawnEggItem(KoboldsModEntities.KOBOLD_ENCHANTER, -10066330, -13057,
+			new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB)).setRegistryName("kobold_enchanter_spawn_egg"));
 	public static final Item KOBOLD_POTION_HEALTH = register(new KoboldPotionHealthItem());
 	public static final Item KOBOLD_POTION_FIRE = register(new KoboldPotionFireItem());
 	public static final Item KOBOLD_POTION_STEALTH = register(new KoboldPotionStealthItem());

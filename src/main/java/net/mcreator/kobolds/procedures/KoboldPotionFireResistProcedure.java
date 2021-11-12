@@ -11,15 +11,10 @@ import java.util.Map;
 
 public class KoboldPotionFireResistProcedure {
 	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldPotionFireResist!");
-			return;
-		}
 		Entity entity = (Entity) dependencies.get("entity");
 		if (entity.isAlive()) {
-			if (entity instanceof LivingEntity _entity)
-				_entity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2700, 0));
+			if (entity instanceof LivingEntity livingentity)
+				livingentity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2700, 0));
 		}
 	}
 }

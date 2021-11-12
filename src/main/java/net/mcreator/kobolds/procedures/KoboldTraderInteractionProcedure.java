@@ -39,7 +39,9 @@ import net.minecraft.advancements.Advancement;
 
 import net.mcreator.kobolds.init.KoboldsModItems;
 import net.mcreator.kobolds.init.KoboldsModEntities;
+import net.mcreator.kobolds.entity.KoboldWarriorEntity;
 import net.mcreator.kobolds.entity.KoboldEntity;
+import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Map;
@@ -179,12 +181,12 @@ public class KoboldTraderInteractionProcedure {
 								if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 										? _plr.getAdvancements()
 												.getOrStartProgress(_plr.server.getAdvancements()
-														.getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+														.getAdvancement(new ResourceLocation("kobolds:kobold_trader_advancement")))
 												.isDone()
 										: false) == false) {
 									if (sourceentity instanceof ServerPlayer _player) {
 										Advancement _adv = _player.server.getAdvancements()
-												.getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+												.getAdvancement(new ResourceLocation("kobolds:kobold_trader_advancement"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -255,7 +257,7 @@ public class KoboldTraderInteractionProcedure {
 						if (!entity.level.isClientSide())
 							entity.discard();
 						if (world instanceof ServerLevel _level) {
-							Entity entityToSpawn = new KoboldEntity(KoboldsModEntities.KOBOLD, _level);
+							Entity entityToSpawn = new KoboldWarriorEntity(KoboldsModEntities.KOBOLD_WARRIOR, _level);
 							entityToSpawn.moveTo((entity.getX()), (entity.getY()), (entity.getZ()), world.getRandom().nextFloat() * 360F, 0);
 							if (entityToSpawn instanceof Mob _mobToSpawn)
 								_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()),
@@ -265,12 +267,12 @@ public class KoboldTraderInteractionProcedure {
 						if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 								? _plr.getAdvancements()
 										.getOrStartProgress(
-												_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+												_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_halt_advancement")))
 										.isDone()
 								: false) == false) {
 							if (sourceentity instanceof ServerPlayer _player) {
 								Advancement _adv = _player.server.getAdvancements()
-										.getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+										.getAdvancement(new ResourceLocation("kobolds:kobold_halt_advancement"));
 								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 								if (!_ap.isDone()) {
 									Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -281,7 +283,7 @@ public class KoboldTraderInteractionProcedure {
 						}
 						MinecraftForge.EVENT_BUS.unregister(this);
 					}
-				}.start(world, 1200);
+				}.start(world, 600);
 			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.BREAD) {
 				if ((new Object() {
 					public boolean checkGamemode(Entity _ent) {
@@ -332,6 +334,13 @@ public class KoboldTraderInteractionProcedure {
 					}
 
 					private void run() {
+						if (entity instanceof LivingEntity _entity) {
+							ItemStack _setstack = (ItemStack.EMPTY);
+							_setstack.setCount(1);
+							_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
+							if (_entity instanceof ServerPlayer _serverPlayer)
+								_serverPlayer.getInventory().setChanged();
+						}
 						if (entity instanceof LivingEntity _entity)
 							_entity.addEffect(new MobEffectInstance(MobEffects.HEAL, 12, 0));
 						MinecraftForge.EVENT_BUS.unregister(this);
@@ -388,7 +397,7 @@ public class KoboldTraderInteractionProcedure {
 					}
 
 					private void run() {
-						if (!world.getEntitiesOfClass(KoboldEntity.class,
+						if (!world.getEntitiesOfClass(KoboldWarriorEntity.class,
 								AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 24, 24, 24), e -> true).isEmpty()) {
 							if (entity instanceof LivingEntity _entity) {
 								ItemStack _setstack = (ItemStack.EMPTY);
@@ -400,13 +409,13 @@ public class KoboldTraderInteractionProcedure {
 							entity.getPersistentData().putDouble("TimerApple", 24000);
 							if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 									? _plr.getAdvancements()
-											.getOrStartProgress(
-													_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+											.getOrStartProgress(_plr.server.getAdvancements()
+													.getAdvancement(new ResourceLocation("kobolds:kobold_apple_advance")))
 											.isDone()
 									: false) == false) {
 								if (sourceentity instanceof ServerPlayer _player) {
 									Advancement _adv = _player.server.getAdvancements()
-											.getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+											.getAdvancement(new ResourceLocation("kobolds:kobold_apple_advance"));
 									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 									if (!_ap.isDone()) {
 										Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -429,7 +438,7 @@ public class KoboldTraderInteractionProcedure {
 				}.start(world, 100);
 			}
 		}
-		if (entity instanceof KoboldEntity
+		if (entity instanceof AbstractKoboldEntity
 				&& ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.SHIELD) == false
 				&& ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY)
 						.getItem()) == true) {
@@ -440,11 +449,11 @@ public class KoboldTraderInteractionProcedure {
 						ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_purr")), SoundSource.NEUTRAL, 1, 1);
 			if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 					? _plr.getAdvancements()
-							.getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+							.getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_pet_advancement")))
 							.isDone()
 					: false) == false) {
 				if (sourceentity instanceof ServerPlayer _player) {
-					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_pet_advancement"));
 					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 					if (!_ap.isDone()) {
 						Iterator _iterator = _ap.getRemainingCriteria().iterator();

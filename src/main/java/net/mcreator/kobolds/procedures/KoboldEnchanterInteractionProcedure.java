@@ -174,12 +174,12 @@ public class KoboldEnchanterInteractionProcedure {
 								if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 										? _plr.getAdvancements()
 												.getOrStartProgress(_plr.server.getAdvancements()
-														.getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+														.getAdvancement(new ResourceLocation("kobolds:kobold_enchanter_advancement")))
 												.isDone()
 										: false) == false) {
 									if (sourceentity instanceof ServerPlayer _player) {
 										Advancement _adv = _player.server.getAdvancements()
-												.getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+												.getAdvancement(new ResourceLocation("kobolds:kobold_enchanter_advancement"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -234,12 +234,12 @@ public class KoboldEnchanterInteractionProcedure {
 								if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 										? _plr.getAdvancements()
 												.getOrStartProgress(_plr.server.getAdvancements()
-														.getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+														.getAdvancement(new ResourceLocation("kobolds:kobold_enchanter_advancement")))
 												.isDone()
 										: false) == false) {
 									if (sourceentity instanceof ServerPlayer _player) {
 										Advancement _adv = _player.server.getAdvancements()
-												.getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+												.getAdvancement(new ResourceLocation("kobolds:kobold_enchanter_advancement"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();

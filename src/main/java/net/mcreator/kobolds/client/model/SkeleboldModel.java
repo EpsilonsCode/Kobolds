@@ -1,7 +1,5 @@
 package net.mcreator.kobolds.client.model;
 
-import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,13 +17,13 @@ import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.ArmedModel;
 
-import net.mcreator.kobolds.entity.AbstractKoboldEntity;
+import net.mcreator.kobolds.entity.SkeleboldEntity;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> implements ArmedModel, HeadedModel {
-	public static final ModelLayerLocation KOBOLD_MODEL = new ModelLayerLocation(new ResourceLocation("kobolds", "kobold"), "main");
+public class SkeleboldModel<T extends SkeleboldEntity> extends EntityModel<T> implements ArmedModel, HeadedModel {
+	public static final ModelLayerLocation SKELEBOLD_MODEL = new ModelLayerLocation(new ResourceLocation("kobolds", "skelebold"), "main");
 	private final ModelPart head;
 	private final ModelPart rightarm;
 	private final ModelPart leftarm;
@@ -33,7 +31,7 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 	private final ModelPart leftleg;
 	private final ModelPart body;
 
-	public KoboldModel(ModelPart root) {
+	public SkeleboldModel(ModelPart root) {
 		this.head = root.getChild("head");
 		this.rightarm = root.getChild("rightarm");
 		this.leftarm = root.getChild("leftarm");
@@ -57,22 +55,22 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 				CubeListBuilder.create().texOffs(45, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(-2.0F, -7.0F, 2.0F, -0.6109F, -0.3054F, -0.1745F));
 		PartDefinition rightarm = partdefinition.addOrReplaceChild("rightarm",
-				CubeListBuilder.create().texOffs(46, 16).addBox(-3.0F, -0.85F, -1.5F, 3.0F, 10.0F, 3.0F, new CubeDeformation(0.0F)),
+				CubeListBuilder.create().texOffs(46, 16).addBox(-2.01F, -0.85F, -1.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(-2.5F, 5.0F, 0.0F));
 		PartDefinition leftarm = partdefinition.addOrReplaceChild("leftarm",
-				CubeListBuilder.create().texOffs(33, 16).addBox(0.0F, -0.85F, -1.5F, 3.0F, 10.0F, 3.0F, new CubeDeformation(0.0F)),
+				CubeListBuilder.create().texOffs(33, 16).addBox(0.01F, -0.85F, -1.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(3.5F, 5.0F, 0.0F));
 		PartDefinition rightleg = partdefinition.addOrReplaceChild("rightleg",
-				CubeListBuilder.create().texOffs(13, 31).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, new CubeDeformation(0.0F)),
+				CubeListBuilder.create().texOffs(13, 31).addBox(-1.0F, -0.01F, -1.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(-1.0F, 14.0F, 0.0F));
 		PartDefinition leftleg = partdefinition.addOrReplaceChild("leftleg",
-				CubeListBuilder.create().texOffs(0, 31).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F, new CubeDeformation(0.0F)),
+				CubeListBuilder.create().texOffs(0, 31).addBox(-1.0F, -0.01F, -1.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(2.0F, 14.0F, 0.0F));
 		PartDefinition body = partdefinition.addOrReplaceChild("body",
 				CubeListBuilder.create().texOffs(3, 15).addBox(-3.0F, -10.0F, -2.0F, 6.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(0.5F, 14.0F, 0.0F));
 		PartDefinition tail = body.addOrReplaceChild("tail",
-				CubeListBuilder.create().texOffs(24, 15).addBox(-1.0F, -3.0F, 2.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)),
+				CubeListBuilder.create().texOffs(24, 15).addBox(-0.5F, -3.2F, 3.0F, 1.0F, 12.0F, 1.0F, new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.6109F, 0.0F, 0.0F));
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
@@ -95,10 +93,8 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 		this.leftleg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 		this.head.yRot = headYaw * ((float) Math.PI / 180F);
 		this.head.xRot = headPitch * ((float) Math.PI / 180F);
-		
 		this.rightarm.zRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
 		this.leftarm.zRot -= Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
-		
 		if (kobold.hasItemInSlot(EquipmentSlot.MAINHAND)) {
 			if (kobold.isAggressive()) {
 				if (kobold.isLeftHanded()) {
@@ -136,43 +132,6 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 				}
 			}
 		}
-		
-		if (kobold.hasItemInSlot(EquipmentSlot.OFFHAND)) {
-			if (kobold.getOffhandItem().getItem() instanceof TridentItem) {
-				if (kobold.isAggressive()) {
-					if (kobold.isLeftHanded()) {
-						this.rightarm.xRot = 2.8798F;
-						this.leftarm.xRot = 0.0F;
-					} else {
-						this.leftarm.xRot = 2.8798F;
-						this.rightarm.xRot = 0.0F;
-					}
-				}
-			} else if (kobold.getOffhandItem().getItem() instanceof ShieldItem) {
-				if (kobold.isBlocking()) {
-					if (kobold.isLeftHanded()) {
-						this.rightarm.xRot = -0.6981F;
-						this.rightarm.yRot = -0.2618F;
-					} else {
-						this.leftarm.xRot = -0.6981F;
-						this.leftarm.yRot = 0.2618F;
-					}
-				}
-			} else {
-				if (kobold.isLeftHanded()) {
-					this.rightarm.xRot = -0.8727F;
-					this.rightarm.yRot = 0.0873F;
-					this.head.xRot = -0.2618F;
-					this.head.xRot = 0.1745F;
-				} else {
-					this.leftarm.xRot = -0.8727F;
-					this.leftarm.yRot = 0.0873F;
-					this.head.xRot = -0.2618F;
-					this.head.xRot = 0.1745F;
-				}
-			}
-		}
-		
 		if (this.attackTime > 0.0F) {
 			if (kobold.isAggressive()) {
 				if (kobold.isLeftHanded()) {
@@ -192,32 +151,14 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 					float f2 = Mth.sin(progress * (float) Math.PI);
 					rightarm.xRot = (float) ((double) rightarm.xRot - ((double) f2 / 1.2D - (double) 1.0F));
 				}
-			} else {
-				if (kobold.hasItemInSlot(EquipmentSlot.OFFHAND)) {
-					float progress = this.attackTime;
-					this.body.yRot = Mth.sin(Mth.sqrt(progress) * ((float) Math.PI * 2F)) * 0.2F;
-					this.rightarm.yRot += this.body.yRot;
-					this.leftarm.yRot += this.body.yRot;
-					this.leftarm.xRot += this.body.yRot;
-					progress = 1.0F - this.attackTime;
-					progress = progress * progress;
-					progress = progress * progress;
-					progress = 1.0F - progress;
-					float f2 = Mth.sin(progress * (float) Math.PI);
-					float f3 = Mth.sin(this.attackTime * (float) Math.PI) * -(this.head.xRot - 0.7F) * 0.75F;
-					rightarm.xRot = (float) ((double) rightarm.xRot - ((double) f2 * 1.2D + (double) f3));
-					rightarm.yRot += this.body.yRot * 2.0F;
-					rightarm.zRot += Mth.sin(this.attackTime * (float) Math.PI) * -0.4F;
-				}
 			}
 		}
-		
 		/*if (this.isSitting) {
 			this.rightleg.xRot = -1.5708F;
 			this.leftleg.xRot = -1.5708F;
 			this.rightleg.yRot = 0.2618F;
 			this.leftleg.yRot = -0.2618F;
-		}*/
+		}*/
 	}
 
 	@Override

@@ -26,7 +26,7 @@ import net.minecraft.client.Minecraft;
 
 import net.mcreator.kobolds.init.KoboldsModItems;
 import net.mcreator.kobolds.init.KoboldsModEntities;
-import net.mcreator.kobolds.entity.KoboldEntity;
+import net.mcreator.kobolds.entity.KoboldChildEntity;
 import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Random;
@@ -246,7 +246,7 @@ public class KoboldBaseTickProcedure {
 		}
 		if (entity.getPersistentData().getDouble("TimerApple") == 12000) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new KoboldEntity(KoboldsModEntities.KOBOLD, _level);
+				Entity entityToSpawn = new KoboldChildEntity(KoboldsModEntities.KOBOLD_CHILD, _level);
 				entityToSpawn.moveTo((entity.getX()), (entity.getY()), (entity.getZ()), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
@@ -261,39 +261,21 @@ public class KoboldBaseTickProcedure {
 			entity.getPersistentData().putDouble("TimerTrident", (entity.getPersistentData().getDouble("TimerTrident") - 1));
 		} else if (entity.getPersistentData().getDouble("TimerTrident") == 1
 				&& (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY).getItem()) {
-			if (Math.random() >= 0.7) {
-				if (entity instanceof LivingEntity _entity) {
-					ItemStack _setstack = (ItemStack.EMPTY);
-					_setstack.setCount(1);
-					_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
-					if (_entity instanceof ServerPlayer _serverPlayer)
-						_serverPlayer.getInventory().setChanged();
-				}
-				if (entity instanceof LivingEntity _entity) {
-					ItemStack _setstack = (EnchantmentHelper.enchantItem(new Random(), new ItemStack(Items.TRIDENT), 30, (false)));
-					_setstack.setCount(1);
-					_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-					if (_entity instanceof ServerPlayer _serverPlayer)
-						_serverPlayer.getInventory().setChanged();
-				}
-				entity.getPersistentData().putDouble("TimerTrident", (entity.getPersistentData().getDouble("TimerTrident") - 1));
-			} else {
-				if (entity instanceof LivingEntity _entity) {
-					ItemStack _setstack = (ItemStack.EMPTY);
-					_setstack.setCount(1);
-					_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
-					if (_entity instanceof ServerPlayer _serverPlayer)
-						_serverPlayer.getInventory().setChanged();
-				}
-				if (entity instanceof LivingEntity _entity) {
-					ItemStack _setstack = new ItemStack(Items.TRIDENT);
-					_setstack.setCount(1);
-					_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-					if (_entity instanceof ServerPlayer _serverPlayer)
-						_serverPlayer.getInventory().setChanged();
-				}
-				entity.getPersistentData().putDouble("TimerTrident", (entity.getPersistentData().getDouble("TimerTrident") - 1));
+			if (entity instanceof LivingEntity _entity) {
+				ItemStack _setstack = (ItemStack.EMPTY);
+				_setstack.setCount(1);
+				_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
+				if (_entity instanceof ServerPlayer _serverPlayer)
+					_serverPlayer.getInventory().setChanged();
 			}
+			if (entity instanceof LivingEntity _entity) {
+				ItemStack _setstack = new ItemStack(Items.TRIDENT);
+				_setstack.setCount(1);
+				_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
+				if (_entity instanceof ServerPlayer _serverPlayer)
+					_serverPlayer.getInventory().setChanged();
+			}
+			entity.getPersistentData().putDouble("TimerTrident", (entity.getPersistentData().getDouble("TimerTrident") - 1));
 		}
 	}
 }

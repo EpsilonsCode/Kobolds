@@ -8,16 +8,16 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
 
-import net.mcreator.kobolds.entity.KoboldEntity;
+import net.mcreator.kobolds.entity.KoboldEngineerEntity;
 import net.mcreator.kobolds.client.model.KoboldModel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-public class KoboldRenderer extends MobRenderer<KoboldEntity, KoboldModel<KoboldEntity>> {
-	public KoboldRenderer(EntityRendererProvider.Context context) {
+public class KoboldEngineerRenderer extends MobRenderer<KoboldEngineerEntity, KoboldModel<KoboldEngineerEntity>> {
+	public KoboldEngineerRenderer(EntityRendererProvider.Context context) {
 		super(context, new KoboldModel(context.bakeLayer(KoboldModel.KOBOLD_MODEL)), 0.36f);
 		this.addLayer(new ItemInHandLayer<>(this));
-		this.addLayer(new EyesLayer<KoboldEntity, KoboldModel<KoboldEntity>>(this) {
+		this.addLayer(new EyesLayer<KoboldEngineerEntity, KoboldModel<KoboldEngineerEntity>>(this) {
 			@Override
 			public RenderType renderType() {
 				return RenderType.eyes(new ResourceLocation("kobolds:textures/kobold_glow.png"));
@@ -26,12 +26,12 @@ public class KoboldRenderer extends MobRenderer<KoboldEntity, KoboldModel<Kobold
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(KoboldEntity entity) {
-		return new ResourceLocation("kobolds:textures/kobold_base.png");
+	public ResourceLocation getTextureLocation(KoboldEngineerEntity entity) {
+		return new ResourceLocation("kobolds:textures/kobold_engineer.png");
 	}
 
 	@Override
-	public void render(KoboldEntity kobold, float f1, float f2, PoseStack stack, MultiBufferSource buffer, int inty) {
+	public void render(KoboldEngineerEntity kobold, float f1, float f2, PoseStack stack, MultiBufferSource buffer, int inty) {
 		stack.pushPose();
 		stack.translate(-0.025, 0, 0);
 		float scale = 0.875F;

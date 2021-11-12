@@ -40,6 +40,18 @@ public class KoboldsModItems {
 			new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB)).setRegistryName("kobold_warrior_spawn_egg"));
 	public static final Item KOBOLD_ENCHANTER = register(new SpawnEggItem(KoboldsModEntities.KOBOLD_ENCHANTER, -10066330, -13057,
 			new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB)).setRegistryName("kobold_enchanter_spawn_egg"));
+	public static final Item KOBOLD_ENGINEER = register(
+			new SpawnEggItem(KoboldsModEntities.KOBOLD_ENGINEER, -10066330, -65536, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("kobold_engineer_spawn_egg"));
+	public static final Item KOBOLD_PIRATE = register(
+			new SpawnEggItem(KoboldsModEntities.KOBOLD_PIRATE, -10066330, -3355648, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("kobold_pirate_spawn_egg"));
+	public static final Item KOBOLD_CAPTAIN = register(
+			new SpawnEggItem(KoboldsModEntities.KOBOLD_CAPTAIN, -6750208, -3355648, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("kobold_captain_spawn_egg"));
+	public static final Item SKELEBOLD = register(
+			new SpawnEggItem(KoboldsModEntities.SKELEBOLD, -3355444, -13421773, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("skelebold_spawn_egg"));
 	public static final Item KOBOLD_POTION_HEALTH = register(new KoboldPotionHealthItem());
 	public static final Item KOBOLD_POTION_FIRE = register(new KoboldPotionFireItem());
 	public static final Item KOBOLD_POTION_STEALTH = register(new KoboldPotionStealthItem());

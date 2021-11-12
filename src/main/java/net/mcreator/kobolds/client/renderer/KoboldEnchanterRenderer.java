@@ -38,7 +38,7 @@ public class KoboldEnchanterRenderer extends MobRenderer<KoboldEnchanterEntity, 
 	public void render(KoboldEnchanterEntity kobold, float f1, float f2, PoseStack stack, MultiBufferSource buffer, int inty) {
 		stack.pushPose();
 		stack.translate(-0.025, 0, 0);
-		float scale = 0.88F;
+		float scale = 0.875F;
 		stack.scale(scale, scale, scale);
 		super.render(kobold, f1, f2, stack, buffer, inty);
 		stack.popPose();

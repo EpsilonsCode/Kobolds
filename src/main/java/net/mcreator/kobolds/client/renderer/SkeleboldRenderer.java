@@ -8,30 +8,30 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
 
-import net.mcreator.kobolds.entity.KoboldWarriorEntity;
-import net.mcreator.kobolds.client.model.KoboldModel;
+import net.mcreator.kobolds.entity.SkeleboldEntity;
+import net.mcreator.kobolds.client.model.SkeleboldModel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-public class KoboldWarriorRenderer extends MobRenderer<KoboldWarriorEntity, KoboldModel<KoboldWarriorEntity>> {
-	public KoboldWarriorRenderer(EntityRendererProvider.Context context) {
-		super(context, new KoboldModel(context.bakeLayer(KoboldModel.KOBOLD_MODEL)), 0.36f);
+public class SkeleboldRenderer extends MobRenderer<SkeleboldEntity, SkeleboldModel<SkeleboldEntity>> {
+	public SkeleboldRenderer(EntityRendererProvider.Context context) {
+		super(context, new SkeleboldModel(context.bakeLayer(SkeleboldModel.SKELEBOLD_MODEL)), 0.36f);
 		this.addLayer(new ItemInHandLayer<>(this));
-		this.addLayer(new EyesLayer<KoboldWarriorEntity, KoboldModel<KoboldWarriorEntity>>(this) {
+		this.addLayer(new EyesLayer<SkeleboldEntity, SkeleboldModel<SkeleboldEntity>>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("kobolds:textures/kobold_glow.png"));
+				return RenderType.eyes(new ResourceLocation("kobolds:textures/kobold_skeleton_glow.png"));
 			}
 		});
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(KoboldWarriorEntity entity) {
-		return new ResourceLocation("kobolds:textures/kobold_warrior.png");
+	public ResourceLocation getTextureLocation(SkeleboldEntity entity) {
+		return new ResourceLocation("kobolds:textures/kobold_skeleton.png");
 	}
 
 	@Override
-	public void render(KoboldWarriorEntity kobold, float f1, float f2, PoseStack stack, MultiBufferSource buffer, int inty) {
+	public void render(SkeleboldEntity kobold, float f1, float f2, PoseStack stack, MultiBufferSource buffer, int inty) {
 		stack.pushPose();
 		stack.translate(-0.025, 0, 0);
 		float scale = 0.875F;

@@ -34,6 +34,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
 
+import net.mcreator.kobolds.entity.KoboldChildEntity;
 import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Map;
@@ -172,13 +173,13 @@ public class KoboldEngineerInteractionProcedure {
 							}
 							if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 									? _plr.getAdvancements()
-											.getOrStartProgress(
-													_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/mine_stone")))
+											.getOrStartProgress(_plr.server.getAdvancements()
+													.getAdvancement(new ResourceLocation("kobolds:kobold_engineer_advancement")))
 											.isDone()
 									: false) == false) {
 								if (sourceentity instanceof ServerPlayer _player) {
 									Advancement _adv = _player.server.getAdvancements()
-											.getAdvancement(new ResourceLocation("minecraft:story/mine_stone"));
+											.getAdvancement(new ResourceLocation("kobolds:kobold_engineer_advancement"));
 									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 									if (!_ap.isDone()) {
 										Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -193,6 +194,28 @@ public class KoboldEngineerInteractionProcedure {
 					MinecraftForge.EVENT_BUS.unregister(this);
 				}
 			}.start(world, 100);
+		} else if (entity instanceof KoboldChildEntity
+				&& (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.COOKIE) {
+			if ((new Object() {
+				public boolean checkGamemode(Entity _ent) {
+					if (_ent instanceof ServerPlayer _serverPlayer) {
+						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+					} else if (_ent.level.isClientSide() && _ent instanceof AbstractClientPlayer _clientPlayer) {
+						PlayerInfo _pi = Minecraft.getInstance().getConnection().getPlayerInfo(_clientPlayer.getGameProfile().getId());
+						return _pi != null && _pi.getGameMode() == GameType.CREATIVE;
+					}
+					return false;
+				}
+			}.checkGamemode(sourceentity)) == false) {
+				if (sourceentity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(Items.COOKIE);
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
+				}
+			}
+			if (sourceentity instanceof LivingEntity _entity)
+				_entity.swing(InteractionHand.MAIN_HAND, true);
+			entity.getPersistentData().putDouble("TimerGrow", (entity.getPersistentData().getDouble("TimerGrow") + 100));
 		}
 	}
 }

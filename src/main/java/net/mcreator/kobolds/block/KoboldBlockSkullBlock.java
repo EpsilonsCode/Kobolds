@@ -25,18 +25,24 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
+import net.mcreator.kobolds.procedures.SkeleboldSummonProcedure;
 import net.mcreator.kobolds.init.KoboldsModBlocks;
 
+import java.util.Random;
 import java.util.List;
 import java.util.Collections;
+
+import com.google.common.collect.ImmutableMap;
 
 public class KoboldBlockSkullBlock extends Block implements SimpleWaterloggedBlock
 
@@ -45,7 +51,7 @@ public class KoboldBlockSkullBlock extends Block implements SimpleWaterloggedBlo
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 	public KoboldBlockSkullBlock() {
-		super(Block.Properties.of(Material.DECORATION).sound(SoundType.BONE_BLOCK).strength(1f, 10f).lightLevel(s -> 0).noOcclusion()
+		super(Block.Properties.of(Material.DECORATION).sound(SoundType.BONE_BLOCK).strength(0.7f, 4f).lightLevel(s -> 0).noOcclusion().randomTicks()
 				.isRedstoneConductor((bs, br, bp) -> false).dynamicShape());
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 		setRegistryName("kobold_block_skull");
@@ -126,6 +132,25 @@ public class KoboldBlockSkullBlock extends Block implements SimpleWaterloggedBlo
 		if (!dropsOriginal.isEmpty())
 			return dropsOriginal;
 		return Collections.singletonList(new ItemStack(this, 1));
+	}
+
+	@Override
+	public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
+		super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
+		if (world.getBestNeighborSignal(pos) > 0) {
+			SkeleboldSummonProcedure.execute(ImmutableMap.<String, Object>builder().put("x", pos.getX()).put("y", pos.getY()).put("z", pos.getZ())
+					.put("world", world).build());
+		}
+	}
+
+	@Override
+	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, Random random) {
+		super.tick(blockstate, world, pos, random);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+
+		SkeleboldSummonProcedure.execute(ImmutableMap.<String, Object>builder().put("x", x).put("y", y).put("z", z).put("world", world).build());
 	}
 
 	@OnlyIn(Dist.CLIENT)

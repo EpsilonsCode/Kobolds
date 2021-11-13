@@ -5,11 +5,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.Difficulty;
 import net.minecraft.sounds.SoundSource;
@@ -17,6 +15,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.Minecraft;
 
+import net.mcreator.kobolds.init.KoboldsModEntities;
+import net.mcreator.kobolds.entity.ZomboldEntity;
 import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Map;
@@ -50,7 +50,7 @@ public class KoboldDeathProcedure {
 							ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.converted")), SoundSource.NEUTRAL, 1,
 							(float) 0.7);
 				if (world instanceof ServerLevel _level) {
-					Entity entityToSpawn = new Cow(EntityType.COW, _level);
+					Entity entityToSpawn = new ZomboldEntity(KoboldsModEntities.ZOMBOLD, _level);
 					entityToSpawn.moveTo((entity.getX()), (entity.getY()), (entity.getZ()), world.getRandom().nextFloat() * 360F, 0);
 					if (entityToSpawn instanceof Mob _mobToSpawn)
 						_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED,
@@ -65,7 +65,7 @@ public class KoboldDeathProcedure {
 							ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.converted")), SoundSource.NEUTRAL, 1,
 							(float) 0.7);
 				if (world instanceof ServerLevel _level) {
-					Entity entityToSpawn = new Cow(EntityType.COW, _level);
+					Entity entityToSpawn = new ZomboldEntity(KoboldsModEntities.ZOMBOLD, _level);
 					entityToSpawn.moveTo((entity.getX()), (entity.getY()), (entity.getZ()), world.getRandom().nextFloat() * 360F, 0);
 					if (entityToSpawn instanceof Mob _mobToSpawn)
 						_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED,

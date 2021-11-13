@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 
+import net.mcreator.kobolds.client.renderer.ZomboldRenderer;
 import net.mcreator.kobolds.client.renderer.SkeleboldRenderer;
 import net.mcreator.kobolds.client.renderer.KoboldWarriorRenderer;
 import net.mcreator.kobolds.client.renderer.KoboldRenderer;
@@ -17,6 +18,7 @@ import net.mcreator.kobolds.client.renderer.KoboldEngineerRenderer;
 import net.mcreator.kobolds.client.renderer.KoboldEnchanterRenderer;
 import net.mcreator.kobolds.client.renderer.KoboldChildRenderer;
 import net.mcreator.kobolds.client.renderer.KoboldCaptainRenderer;
+import net.mcreator.kobolds.client.renderer.DrownedZomboldRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class KoboldsModEntityRenderers {
@@ -29,6 +31,8 @@ public class KoboldsModEntityRenderers {
 		event.registerEntityRenderer(KoboldsModEntities.KOBOLD_PIRATE, KoboldPirateRenderer::new);
 		event.registerEntityRenderer(KoboldsModEntities.KOBOLD_CAPTAIN, KoboldCaptainRenderer::new);
 		event.registerEntityRenderer(KoboldsModEntities.KOBOLD_CHILD, KoboldChildRenderer::new);
+		event.registerEntityRenderer(KoboldsModEntities.ZOMBOLD, ZomboldRenderer::new);
+		event.registerEntityRenderer(KoboldsModEntities.DROWNED_ZOMBOLD, DrownedZomboldRenderer::new);
 		event.registerEntityRenderer(KoboldsModEntities.SKELEBOLD, SkeleboldRenderer::new);
 	}
 }

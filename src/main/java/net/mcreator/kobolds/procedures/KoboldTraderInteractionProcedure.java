@@ -39,9 +39,9 @@ import net.minecraft.advancements.Advancement;
 
 import net.mcreator.kobolds.init.KoboldsModItems;
 import net.mcreator.kobolds.init.KoboldsModEntities;
+import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 import net.mcreator.kobolds.entity.KoboldWarriorEntity;
 import net.mcreator.kobolds.entity.KoboldEntity;
-import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Map;
@@ -248,23 +248,6 @@ public class KoboldTraderInteractionProcedure {
 								_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()),
 										MobSpawnType.MOB_SUMMONED, null, null);
 							world.addFreshEntity(entityToSpawn);
-						}
-						if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
-								? _plr.getAdvancements()
-										.getOrStartProgress(
-												_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_halt_advancement")))
-										.isDone()
-								: false) == false) {
-							if (sourceentity instanceof ServerPlayer _player) {
-								Advancement _adv = _player.server.getAdvancements()
-										.getAdvancement(new ResourceLocation("kobolds:kobold_halt_advancement"));
-								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-								if (!_ap.isDone()) {
-									Iterator _iterator = _ap.getRemainingCriteria().iterator();
-									while (_iterator.hasNext())
-										_player.getAdvancements().award(_adv, (String) _iterator.next());
-								}
-							}
 						}
 						MinecraftForge.EVENT_BUS.unregister(this);
 					}

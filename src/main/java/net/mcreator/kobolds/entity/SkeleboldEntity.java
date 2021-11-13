@@ -3,6 +3,7 @@ package net.mcreator.kobolds.entity;
 
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
@@ -10,11 +11,13 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.MobSpawnType;
@@ -105,6 +108,8 @@ public class SkeleboldEntity extends Skeleton implements CrossbowAttackMob, Rang
 	}
 
 	public static void init() {
+		SpawnPlacements.register(KoboldsModEntities.SKELEBOLD, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Monster::checkMonsterSpawnRules);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

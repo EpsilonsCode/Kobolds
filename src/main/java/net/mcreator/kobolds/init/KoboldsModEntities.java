@@ -14,6 +14,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
+import net.mcreator.kobolds.entity.ZomboldEntity;
 import net.mcreator.kobolds.entity.SkeleboldEntity;
 import net.mcreator.kobolds.entity.KoboldWarriorEntity;
 import net.mcreator.kobolds.entity.KoboldPirateEntity;
@@ -22,6 +23,7 @@ import net.mcreator.kobolds.entity.KoboldEngineerEntity;
 import net.mcreator.kobolds.entity.KoboldEnchanterEntity;
 import net.mcreator.kobolds.entity.KoboldChildEntity;
 import net.mcreator.kobolds.entity.KoboldCaptainEntity;
+import net.mcreator.kobolds.entity.DrownedZomboldEntity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -50,6 +52,12 @@ public class KoboldsModEntities {
 	public static final EntityType<KoboldChildEntity> KOBOLD_CHILD = register("kobold_child",
 			EntityType.Builder.<KoboldChildEntity>of(KoboldChildEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true)
 					.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(KoboldChildEntity::new).sized(0.5f, 1.48f));
+	public static final EntityType<ZomboldEntity> ZOMBOLD = register("zombold",
+			EntityType.Builder.<ZomboldEntity>of(ZomboldEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64)
+					.setUpdateInterval(3).setCustomClientFactory(ZomboldEntity::new).sized(0.5f, 1.48f));
+	public static final EntityType<DrownedZomboldEntity> DROWNED_ZOMBOLD = register("drowned_zombold",
+			EntityType.Builder.<DrownedZomboldEntity>of(DrownedZomboldEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(DrownedZomboldEntity::new).sized(0.5f, 1.48f));
 	public static final EntityType<SkeleboldEntity> SKELEBOLD = register("skelebold",
 			EntityType.Builder.<SkeleboldEntity>of(SkeleboldEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true)
 					.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SkeleboldEntity::new).sized(0.5f, 1.48f));
@@ -75,6 +83,8 @@ public class KoboldsModEntities {
 			KoboldPirateEntity.init();
 			KoboldCaptainEntity.init();
 			KoboldChildEntity.init();
+			ZomboldEntity.init();
+			DrownedZomboldEntity.init();
 			SkeleboldEntity.init();
 		});
 	}
@@ -88,6 +98,8 @@ public class KoboldsModEntities {
 		event.put(KOBOLD_PIRATE, KoboldPirateEntity.createAttributes().build());
 		event.put(KOBOLD_CAPTAIN, KoboldCaptainEntity.createAttributes().build());
 		event.put(KOBOLD_CHILD, KoboldChildEntity.createAttributes().build());
+		event.put(ZOMBOLD, ZomboldEntity.createAttributes().build());
+		event.put(DROWNED_ZOMBOLD, DrownedZomboldEntity.createAttributes().build());
 		event.put(SKELEBOLD, SkeleboldEntity.createAttributes().build());
 	}
 }

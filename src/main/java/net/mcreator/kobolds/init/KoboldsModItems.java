@@ -49,6 +49,11 @@ public class KoboldsModItems {
 	public static final Item KOBOLD_CAPTAIN = register(
 			new SpawnEggItem(KoboldsModEntities.KOBOLD_CAPTAIN, -6750208, -3355648, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
 					.setRegistryName("kobold_captain_spawn_egg"));
+	public static final Item ZOMBOLD = register(
+			new SpawnEggItem(KoboldsModEntities.ZOMBOLD, -16737895, -10027111, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
+					.setRegistryName("zombold_spawn_egg"));
+	public static final Item DROWNED_ZOMBOLD = register(new SpawnEggItem(KoboldsModEntities.DROWNED_ZOMBOLD, -13382401, -10027111,
+			new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB)).setRegistryName("drowned_zombold_spawn_egg"));
 	public static final Item SKELEBOLD = register(
 			new SpawnEggItem(KoboldsModEntities.SKELEBOLD, -3355444, -13421773, new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB))
 					.setRegistryName("skelebold_spawn_egg"));

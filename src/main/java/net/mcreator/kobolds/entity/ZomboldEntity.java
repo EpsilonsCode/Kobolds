@@ -21,14 +21,18 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 
+import net.mcreator.kobolds.procedures.ZomboldBaseTickProcedure;
 import net.mcreator.kobolds.init.KoboldsModEntities;
 import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 import java.util.Set;
+
+import com.google.common.collect.ImmutableMap;
 
 @Mod.EventBusSubscriber
 public class ZomboldEntity extends Zombie {
@@ -80,6 +84,17 @@ public class ZomboldEntity extends Zombie {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.death"));
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		Level world = this.level;
+		ZomboldBaseTickProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
 	}
 
 	public static void init() {

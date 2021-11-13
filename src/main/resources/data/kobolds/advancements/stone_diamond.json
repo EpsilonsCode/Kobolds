@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "kobolds:kobold_iron_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.stone_diamond.title"
+    },
+    "description": {
+      "translate": "advancements.stone_diamond.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "stone_diamond": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 1
+  },
+  "parent": "kobolds:kobold_pet_advancement"
+}

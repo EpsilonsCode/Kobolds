@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "kobolds:kobold_iron_sword"
+    },
+    "title": {
+      "translate": "advancements.kobold_trio_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.kobold_trio_advancement.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kobold_trio_advancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "kobolds:kobold_pirate_advancement"
+}

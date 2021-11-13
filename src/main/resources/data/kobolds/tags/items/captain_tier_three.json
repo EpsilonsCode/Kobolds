@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither_skeleton_skull",
+    "minecraft:totem_of_undying",
+    "minecraft:enchanted_golden_apple"
+  ]
+}

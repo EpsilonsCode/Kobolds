@@ -34,7 +34,7 @@ public class ZomboldBaseTickProcedure {
 		}
 		Entity entity = (Entity) dependencies.get("entity");
 		LevelAccessor world = (LevelAccessor) dependencies.get("world");
-		if (entity.getPersistentData().getDouble("Drown") < 20) {
+		if (entity.getPersistentData().getDouble("Drown") < 600) {
 			if (entity.isInWater()
 					&& ((world.getBlockState(new BlockPos((int) (entity.getX() - 1), (int) (entity.getY() + 1), (int) (entity.getZ() - 1))))
 							.getBlock() == Blocks.WATER
@@ -44,7 +44,7 @@ public class ZomboldBaseTickProcedure {
 			} else if (entity.getPersistentData().getDouble("Drown") > 0) {
 				entity.getPersistentData().putDouble("Drown", (entity.getPersistentData().getDouble("Drown") - 1));
 			}
-		} else if (entity.getPersistentData().getDouble("Drown") >= 20) {
+		} else if (entity.getPersistentData().getDouble("Drown") >= 600) {
 			if (!entity.level.isClientSide())
 				entity.discard();
 			if (world instanceof Level _level)

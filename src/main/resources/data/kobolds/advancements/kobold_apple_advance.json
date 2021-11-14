@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.kobold_apple_advance.descr"
     },
-    "frame": "goal",
+    "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
@@ -20,7 +20,7 @@
     }
   },
   "rewards": {
-    "experience": 2
+    "experience": 0
   },
-  "parent": "kobolds:kobold_trader_advancement"
+  "parent": "kobolds:kobold_pet_advancement"
 }

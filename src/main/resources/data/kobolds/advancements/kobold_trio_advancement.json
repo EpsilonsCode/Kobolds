@@ -20,7 +20,7 @@
     }
   },
   "rewards": {
-    "experience": 5
+    "experience": 0
   },
   "parent": "kobolds:kobold_pirate_advancement"
 }

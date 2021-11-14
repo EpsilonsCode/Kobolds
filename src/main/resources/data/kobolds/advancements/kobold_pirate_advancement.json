@@ -20,7 +20,7 @@
     }
   },
   "rewards": {
-    "experience": 2
+    "experience": 0
   },
   "parent": "kobolds:kobold_engineer_advancement"
 }

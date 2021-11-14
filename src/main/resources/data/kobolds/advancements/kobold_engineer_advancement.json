@@ -20,7 +20,7 @@
     }
   },
   "rewards": {
-    "experience": 1
+    "experience": 0
   },
   "parent": "kobolds:kobold_enchanter_advancement"
 }

@@ -135,6 +135,7 @@ public class KoboldCaptainInteractionProcedure {
 					if (_entity instanceof ServerPlayer _serverPlayer)
 						_serverPlayer.getInventory().setChanged();
 				}
+				sourceentity.getPersistentData().putBoolean("Captain", (true));
 				new Object() {
 					private int ticks = 0;
 					private float waitTicks;
@@ -195,6 +196,7 @@ public class KoboldCaptainInteractionProcedure {
 									if (_entity instanceof ServerPlayer _serverPlayer)
 										_serverPlayer.getInventory().setChanged();
 								}
+								sourceentity.getPersistentData().putBoolean("Captain", (false));
 								if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 										? _plr.getAdvancements()
 												.getOrStartProgress(_plr.server.getAdvancements()
@@ -272,6 +274,7 @@ public class KoboldCaptainInteractionProcedure {
 					if (_entity instanceof ServerPlayer _serverPlayer)
 						_serverPlayer.getInventory().setChanged();
 				}
+				sourceentity.getPersistentData().putBoolean("Captain", (true));
 				new Object() {
 					private int ticks = 0;
 					private float waitTicks;
@@ -332,6 +335,7 @@ public class KoboldCaptainInteractionProcedure {
 									if (_entity instanceof ServerPlayer _serverPlayer)
 										_serverPlayer.getInventory().setChanged();
 								}
+								sourceentity.getPersistentData().putBoolean("Captain", (false));
 								if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 										? _plr.getAdvancements()
 												.getOrStartProgress(_plr.server.getAdvancements()
@@ -409,6 +413,7 @@ public class KoboldCaptainInteractionProcedure {
 					if (_entity instanceof ServerPlayer _serverPlayer)
 						_serverPlayer.getInventory().setChanged();
 				}
+				sourceentity.getPersistentData().putBoolean("Captain", (true));
 				new Object() {
 					private int ticks = 0;
 					private float waitTicks;
@@ -469,6 +474,7 @@ public class KoboldCaptainInteractionProcedure {
 									if (_entity instanceof ServerPlayer _serverPlayer)
 										_serverPlayer.getInventory().setChanged();
 								}
+								sourceentity.getPersistentData().putBoolean("Captain", (false));
 								if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 										? _plr.getAdvancements()
 												.getOrStartProgress(_plr.server.getAdvancements()

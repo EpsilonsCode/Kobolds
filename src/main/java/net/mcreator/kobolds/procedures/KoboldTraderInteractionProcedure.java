@@ -68,6 +68,21 @@ public class KoboldTraderInteractionProcedure {
 	}
 
 	public static void execute(Map<String, Object> dependencies) {
+		if (dependencies.get("entity") == null) {
+			if (!dependencies.containsKey("entity"))
+				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldTraderInteraction!");
+			return;
+		}
+		if (dependencies.get("sourceentity") == null) {
+			if (!dependencies.containsKey("sourceentity"))
+				KoboldsMod.LOGGER.warn("Failed to load dependency sourceentity for procedure KoboldTraderInteraction!");
+			return;
+		}
+		if (dependencies.get("world") == null) {
+			if (!dependencies.containsKey("world"))
+				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure KoboldTraderInteraction!");
+			return;
+		}
 		Entity entity = (Entity) dependencies.get("entity");
 		Entity sourceentity = (Entity) dependencies.get("sourceentity");
 		LevelAccessor world = (LevelAccessor) dependencies.get("world");
@@ -248,6 +263,21 @@ public class KoboldTraderInteractionProcedure {
 								_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()),
 										MobSpawnType.MOB_SUMMONED, null, null);
 							world.addFreshEntity(entityToSpawn);
+						}
+						if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
+								? _plr.getAdvancements()
+										.getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_halt")))
+										.isDone()
+								: false) == false) {
+							if (sourceentity instanceof ServerPlayer _player) {
+								Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_halt"));
+								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+								if (!_ap.isDone()) {
+									Iterator _iterator = _ap.getRemainingCriteria().iterator();
+									while (_iterator.hasNext())
+										_player.getAdvancements().award(_adv, (String) _iterator.next());
+								}
+							}
 						}
 						MinecraftForge.EVENT_BUS.unregister(this);
 					}

@@ -111,6 +111,7 @@ public class KoboldEngineerInteractionProcedure {
 				if (_entity instanceof ServerPlayer _serverPlayer)
 					_serverPlayer.getInventory().setChanged();
 			}
+			sourceentity.getPersistentData().putBoolean("Engineer", (true));
 			new Object() {
 				private int ticks = 0;
 				private float waitTicks;
@@ -143,6 +144,27 @@ public class KoboldEngineerInteractionProcedure {
 								new CommandSourceStack(CommandSource.NULL, new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), Vec2.ZERO,
 										_level, 4, "", new TextComponent(""), _level.getServer(), null).withSuppressedOutput(),
 								"/loot spawn ~ ~ ~ loot kobolds:gameplay/engineer_loot");
+					if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
+							? _plr.getAdvancements()
+									.getOrStartProgress(
+											_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_trio_advancement")))
+									.isDone()
+							: false) == false) {
+						if (sourceentity.getPersistentData().getBoolean("Enchanter") == true
+								&& sourceentity.getPersistentData().getBoolean("Engineer") == true
+								&& sourceentity.getPersistentData().getBoolean("Captain") == true) {
+							if (sourceentity instanceof ServerPlayer _player) {
+								Advancement _adv = _player.server.getAdvancements()
+										.getAdvancement(new ResourceLocation("kobolds:kobold_trio_advancement"));
+								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+								if (!_ap.isDone()) {
+									Iterator _iterator = _ap.getRemainingCriteria().iterator();
+									while (_iterator.hasNext())
+										_player.getAdvancements().award(_adv, (String) _iterator.next());
+								}
+							}
+						}
+					}
 					new Object() {
 						private int ticks = 0;
 						private float waitTicks;
@@ -171,6 +193,7 @@ public class KoboldEngineerInteractionProcedure {
 								if (_entity instanceof ServerPlayer _serverPlayer)
 									_serverPlayer.getInventory().setChanged();
 							}
+							sourceentity.getPersistentData().putBoolean("Engineer", (false));
 							if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
 									? _plr.getAdvancements()
 											.getOrStartProgress(_plr.server.getAdvancements()

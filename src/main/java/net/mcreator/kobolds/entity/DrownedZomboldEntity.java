@@ -11,7 +11,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Drowned;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.GlowSquid;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -52,7 +52,12 @@ public class DrownedZomboldEntity extends Drowned {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, AbstractKoboldEntity.class, true, false));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, WaterAnimal.class, true, false));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, GlowSquid.class, true, false));
+	}
+
+	@Override
+	public double getMyRidingOffset() {
+		return this.isBaby() ? 0.0D : -0.15D;
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {

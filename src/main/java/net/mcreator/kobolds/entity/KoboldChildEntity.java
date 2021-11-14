@@ -26,6 +26,7 @@ public class KoboldChildEntity extends AbstractKoboldEntity {
 
 	public KoboldChildEntity(EntityType<KoboldChildEntity> type, Level world) {
 		super(type, world);
+		this.setCanPickUpLoot(false);
 	}
 
 	@Override

@@ -95,6 +95,14 @@ public class SkeleboldModel<T extends SkeleboldEntity> extends EntityModel<T> im
 		this.head.xRot = headPitch * ((float) Math.PI / 180F);
 		this.rightarm.zRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
 		this.leftarm.zRot -= Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
+
+		if (this.riding) {
+			this.rightleg.xRot = -1.5708F;
+			this.leftleg.xRot = -1.5708F;
+			this.rightleg.yRot = 0.2618F;
+			this.leftleg.yRot = -0.2618F;
+		}
+		
 		if (kobold.hasItemInSlot(EquipmentSlot.MAINHAND)) {
 			if (kobold.isAggressive()) {
 				if (kobold.isLeftHanded()) {
@@ -153,12 +161,6 @@ public class SkeleboldModel<T extends SkeleboldEntity> extends EntityModel<T> im
 				}
 			}
 		}
-		/*if (this.isSitting) {
-			this.rightleg.xRot = -1.5708F;
-			this.leftleg.xRot = -1.5708F;
-			this.rightleg.yRot = 0.2618F;
-			this.leftleg.yRot = -0.2618F;
-		}*/
 	}
 
 	@Override

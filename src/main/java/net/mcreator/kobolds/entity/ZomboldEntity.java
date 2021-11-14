@@ -59,8 +59,24 @@ public class ZomboldEntity extends Zombie {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, AbstractKoboldEntity.class, true, false));
 	}
 
+	@Override
+	public double getMyRidingOffset() {
+		return this.isBaby() ? 0.0D : -0.15D;
+	}
+
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return this.isBaby() ? 0.66F : 1.26F;
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		Level world = this.level;
+		ZomboldBaseTickProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
 	}
 
 	protected boolean convertsInWater() {
@@ -84,17 +100,6 @@ public class ZomboldEntity extends Zombie {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.death"));
-	}
-
-	@Override
-	public void baseTick() {
-		super.baseTick();
-		double x = this.getX();
-		double y = this.getY();
-		double z = this.getZ();
-		Entity entity = this;
-		Level world = this.level;
-		ZomboldBaseTickProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
 	}
 
 	public static void init() {

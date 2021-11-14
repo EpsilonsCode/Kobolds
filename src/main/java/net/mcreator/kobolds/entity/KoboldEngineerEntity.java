@@ -21,6 +21,7 @@ public class KoboldEngineerEntity extends AbstractKoboldEntity {
 
 	public KoboldEngineerEntity(EntityType<KoboldEngineerEntity> type, Level world) {
 		super(type, world);
+		this.setCanPickUpLoot(false);
 	}
 
 	@Override

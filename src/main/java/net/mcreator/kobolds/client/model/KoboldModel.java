@@ -98,6 +98,13 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 		
 		this.rightarm.zRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
 		this.leftarm.zRot -= Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
+
+		if (this.riding) {
+			this.rightleg.xRot = -1.5708F;
+			this.leftleg.xRot = -1.5708F;
+			this.rightleg.yRot = 0.2618F;
+			this.leftleg.yRot = -0.2618F;
+		}
 		
 		if (kobold.hasItemInSlot(EquipmentSlot.MAINHAND)) {
 			if (kobold.isAggressive()) {
@@ -211,13 +218,6 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 				}
 			}
 		}
-		
-		/*if (this.isSitting) {
-			this.rightleg.xRot = -1.5708F;
-			this.leftleg.xRot = -1.5708F;
-			this.rightleg.yRot = 0.2618F;
-			this.leftleg.yRot = -0.2618F;
-		}*/
 	}
 
 	@Override

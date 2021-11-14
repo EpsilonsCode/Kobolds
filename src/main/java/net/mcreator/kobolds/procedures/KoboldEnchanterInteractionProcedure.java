@@ -315,7 +315,7 @@ public class KoboldEnchanterInteractionProcedure {
 			}
 			if (world instanceof Level _level)
 				_level.playSound(_level.isClientSide() ? Minecraft.getInstance().player : null, (entity.getX()), (entity.getY()), (entity.getZ()),
-						ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_idle")), SoundSource.NEUTRAL, 1, 1);
+						ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.cure")), SoundSource.NEUTRAL, 1, 1);
 			if (entity instanceof LivingEntity _entity)
 				_entity.removeEffect(MobEffects.WEAKNESS);
 			if (entity instanceof LivingEntity _entity)

@@ -61,6 +61,11 @@ public class SkeleboldEntity extends Skeleton implements CrossbowAttackMob, Rang
 	}
 
 	@Override
+	public double getMyRidingOffset() {
+		return this.isBaby() ? 0.0D : -0.15D;
+	}
+
+	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		if (this.getMainHandItem().getItem() instanceof CrossbowItem) {
 			this.performCrossbowAttack(this, 6.0F);

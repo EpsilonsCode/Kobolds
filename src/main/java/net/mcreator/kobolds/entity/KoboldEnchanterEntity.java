@@ -19,6 +19,7 @@ public class KoboldEnchanterEntity extends AbstractKoboldEntity {
 
 	public KoboldEnchanterEntity(EntityType<KoboldEnchanterEntity> type, Level world) {
 		super(type, world);
+		this.setCanPickUpLoot(false);
 	}
 
 	@Override

@@ -97,6 +97,13 @@ public class ZomboldModel<T extends Zombie> extends EntityModel<T> implements Ar
 		this.leftarm.xRot -= Mth.cos(ageInTicks * 0.08F) * 0.08F;
 		this.rightarm.zRot += Mth.cos(ageInTicks * 0.08F) * 0.08F + 0.05F;
 		this.leftarm.zRot -= Mth.cos(ageInTicks * 0.08F) * 0.08F + 0.05F;
+
+		if (this.riding) {
+			this.rightleg.xRot = -1.5708F;
+			this.leftleg.xRot = -1.5708F;
+			this.rightleg.yRot = 0.2618F;
+			this.leftleg.yRot = -0.2618F;
+		}
 		
 		if (kobold.isAggressive()) {
 			if (kobold.getMainHandItem().getItem() instanceof TridentItem) {
@@ -129,12 +136,6 @@ public class ZomboldModel<T extends Zombie> extends EntityModel<T> implements Ar
 				}
 			}
 		}
-		/*if (this.isSitting) {
-			this.rightleg.xRot = -1.5708F;
-			this.leftleg.xRot = -1.5708F;
-			this.rightleg.yRot = 0.2618F;
-			this.leftleg.yRot = -0.2618F;
-		}*/
 	}
 
 	@Override

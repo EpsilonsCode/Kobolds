@@ -12,11 +12,12 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
@@ -61,6 +62,7 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		xpReward = 4;
 		setNoAi(false);
 		setPersistenceRequired();
+		this.setCanPickUpLoot(true);
 		((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
 	}
 
@@ -86,6 +88,21 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, LivingEntity.class, (float) 6));
 		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(3, new FloatGoal(this));
+	}
+
+	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return false;
+	}
+
+	@Override
+	public boolean isPreventingPlayerRest(Player player) {
+		return false;
+	}
+
+	@Override
+	public double getMyRidingOffset() {
+		return this.isBaby() ? 0.0D : -0.15D;
 	}
 
 	@Override
@@ -166,10 +183,10 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level;
-
 		if (source.getDirectEntity() instanceof Zombie) {
 			Zombie zombie = (Zombie) source.getDirectEntity();
-			KoboldDeathProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("sourceentity", zombie).put("world", world).build());
+			KoboldDeathProcedure
+					.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("sourceentity", zombie).put("world", world).build());
 		}
 	}
 

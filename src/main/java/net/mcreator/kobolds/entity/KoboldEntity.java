@@ -14,7 +14,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntityType;
 
 import net.mcreator.kobolds.init.KoboldsModEntities;
-import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 public class KoboldEntity extends AbstractKoboldEntity {
 	public KoboldEntity(FMLPlayMessages.SpawnEntity packet, Level world) {

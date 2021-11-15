@@ -3,6 +3,7 @@ package net.mcreator.kobolds.world.structure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
@@ -42,20 +43,19 @@ public class KoboldDenSmall extends StructureFeature<NoneFeatureConfiguration> {
 		}
 
 		@Override
-		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator chunkGenerator, StructureManager templateManagerIn,
-				ChunkPos chunkPos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor height) {
+		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor height) {
+				
 			int x = (chunkPos.x << 4) + 7;
 			int z = (chunkPos.z << 4) + 7;
-			BlockPos blockpos = new BlockPos(x, -20, z);
-			JigsawPlacement.addPieces(registryAccess,
-					new JigsawConfiguration(() -> registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-							.get(new ResourceLocation("kobolds", "koboldsmalldenpool")), 25),
-					PoolElementStructurePiece::new, chunkGenerator, templateManagerIn, blockpos, this.components, this.random, true, true);
-					
-			this.components.forEach(piece -> piece.offset(0, 1, 0));
-			this.components.forEach(piece -> piece.getBoundingBox().minY -= 1);
 			
-			this.recalculateStructureSize();
+			BlockPos blockpos = new BlockPos(x, -20, z);
+			
+			JigsawPlacement.addPieces(registryAccess, new JigsawConfiguration(() -> registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation("kobolds", "koboldsmalldenpool")), 25), PoolElementStructurePiece::new, chunkGenerator, templateManagerIn, blockpos, this.pieces, this.random, true, true, height);
+					
+			this.pieces.forEach(piece -> piece.move(0, 1, 0));
+			//this.pieces.forEach(piece -> piece.getBoundingBox().minY -= 1);
+
+			//this.recalculateStructureSize();
 			this.getBoundingBox();
 		}
 	}

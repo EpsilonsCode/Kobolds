@@ -215,19 +215,17 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof AbstractArrow) {
-			AbstractArrow arrow = (AbstractArrow) source.getDirectEntity();
-			if (arrow.getOwner() instanceof AbstractKoboldEntity) {
+		if (source.getDirectEntity() instanceof Projectile) {
+			Projectile proj = (Projectile) source.getDirectEntity();
+			if (proj.getOwner() instanceof AbstractKoboldEntity) {
 				return false;
 			}
-		} else if (source.getDirectEntity() instanceof ThrownTrident) {
-			ThrownTrident trident = (ThrownTrident) source.getDirectEntity();
-			if (trident.getOwner() instanceof AbstractKoboldEntity) {
-				return false;
-			}
-		}
-		if (source == DamageSource.IN_FIRE)
+		} else if (source.getDirectEntity() instanceof AbstractKoboldEntity) {
 			return false;
+		} else if (source == DamageSource.IN_FIRE) {
+			return false;
+		}
+		
 		return super.hurt(source, amount);
 	}
 }

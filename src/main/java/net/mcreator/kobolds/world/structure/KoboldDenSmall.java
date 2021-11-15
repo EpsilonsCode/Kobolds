@@ -2,11 +2,13 @@ package net.mcreator.kobolds.world.structure;
 
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.ChunkPos;
@@ -17,8 +19,6 @@ import net.minecraft.core.BlockPos;
 
 import mcp.client.Start;
 
-import java.util.List;
-
 import com.mojang.serialization.Codec;
 
 public class KoboldDenSmall extends StructureFeature<NoneFeatureConfiguration> {
@@ -27,13 +27,13 @@ public class KoboldDenSmall extends StructureFeature<NoneFeatureConfiguration> {
 	}
 
 	@Override
-	public GenerationStep.Decoration step() {
-		return GenerationStep.Decoration.SURFACE_STRUCTURES;
+	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
+		return KoboldDenSmall.Start::new;
 	}
 
 	@Override
-	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-		return Start::new;
+	public GenerationStep.Decoration step() {
+		return GenerationStep.Decoration.SURFACE_STRUCTURES;
 	}
 
 	public static class Start extends StructureStart<NoneFeatureConfiguration> {
@@ -43,20 +43,20 @@ public class KoboldDenSmall extends StructureFeature<NoneFeatureConfiguration> {
 
 		@Override
 		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator chunkGenerator, StructureManager templateManagerIn,
-				ChunkPos chunkPos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor levelHeightAccessor) {
-
+				ChunkPos chunkPos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor height) {
 			int x = (chunkPos.x << 4) + 7;
 			int z = (chunkPos.z << 4) + 7;
-
 			BlockPos blockpos = new BlockPos(x, -20, z);
-
-			/*JigsawManager.func_242837_a(dynamicRegistryManager,
-					new VillageConfig(() -> dynamicRegistryManager.getRegistry(Registry.JIGSAW_POOL_KEY)
-							.getOrDefault(new ResourceLocation("kobolds", "koboldsmalldenpool")), 25),
-					AbstractVillagePiece::new, chunkGenerator, templateManagerIn, blockpos, this.components, this.rand, true, true);
+			JigsawPlacement.addPieces(registryAccess,
+					new JigsawConfiguration(() -> registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+							.get(new ResourceLocation("kobolds", "koboldsmalldenpool")), 25),
+					PoolElementStructurePiece::new, chunkGenerator, templateManagerIn, blockpos, this.components, this.random, true, true);
+					
 			this.components.forEach(piece -> piece.offset(0, 1, 0));
 			this.components.forEach(piece -> piece.getBoundingBox().minY -= 1);
-			this.getBoundingBox();*/
+			
+			this.recalculateStructureSize();
+			this.getBoundingBox();
 		}
 	}
 }

@@ -25,8 +25,7 @@ public class StructureRegister {
 		setupMapSpacingAndLand(SMALL_DEN.get(), new StructureFeatureConfiguration(12, 9, 432676512), true);
 	}
 
-	public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(F structure, StructureFeatureConfiguration structureSeparationSettings,
-			boolean transformSurroundingLand) {
+	public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(F structure, StructureFeatureConfiguration structureSeparationSettings, boolean transformSurroundingLand) {
 
 		StructureFeature.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 

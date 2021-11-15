@@ -33,15 +33,14 @@ public class KoboldShieldGoal extends Goal {
 
 	protected boolean raiseShield() {
 		LivingEntity target = kobold.getTarget();
-		if (kobold.isAggressive()) {
-			if (target instanceof RangedAttackMob && kobold.distanceTo(target) >= 0.8D) {
+			if (target instanceof RangedAttackMob && kobold.distanceTo(target) >= 0.2D) {
 				if (target.getMainHandItem().getItem() instanceof AxeItem) {
 					kobold.stopUsingItem();
 					return false;
 				} else {
 					return true;
 				}
-			} else if (target instanceof LivingEntity && kobold.distanceTo(target) >= 0.5D && kobold.distanceTo(target) <= 2.8D) {
+			} else if (target instanceof LivingEntity && kobold.distanceTo(target) >= 0.2D && kobold.distanceTo(target) <= 3.2D) {
 				if (target.getMainHandItem().getItem() instanceof AxeItem) {
 					kobold.stopUsingItem();
 					return false;
@@ -52,9 +51,5 @@ public class KoboldShieldGoal extends Goal {
 				kobold.stopUsingItem();
 				return false;
 			}
-		} else {
-			kobold.stopUsingItem();
-			return false;
-		}
 	}
 }

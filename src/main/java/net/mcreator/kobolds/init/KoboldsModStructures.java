@@ -6,7 +6,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -14,8 +13,13 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.common.MinecraftForge;
 
+import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 
@@ -42,7 +46,7 @@ public class KoboldsModStructures {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		StructureRegister.STRUCTURES.register(modEventBus);
 		modEventBus.addListener(this::setup);
-		//forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
 		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
 	}
 
@@ -59,36 +63,34 @@ public class KoboldsModStructures {
 		}
 	}
 
-	/*private static Method GETCODEC_METHOD;
+	private static Method GETCODEC_METHOD;
 
 	public void addDimensionalSpacing(final WorldEvent.Load event) {
-		if (event.getWorld() instanceof ServerWorld) {
-			ServerWorld serverWorld = (ServerWorld) event.getWorld();
+		if (event.getWorld() instanceof ServerLevel) {
+			ServerLevel serverWorld = (ServerLevel) event.getWorld();
 			try {
 				if (GETCODEC_METHOD == null)
 					GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
-				ResourceLocation cgRL = Registry.CHUNK_GENERATOR_CODEC
-						.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(serverWorld.getChunkProvider().generator));
+				ResourceLocation cgRL = Registry.CHUNK_GENERATOR
+						.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(serverWorld.getChunkSource().generator));
 				if (cgRL != null && cgRL.getNamespace().equals("terraforged"))
 					return;
 			} catch (Exception e) {
 			}
-			if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator
-					|| serverWorld.getDimensionType().equals(World.OVERWORLD)) {
+			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource
+					|| serverWorld.dimensionType().equals(Level.OVERWORLD)) {
 				return;
 			}
-
-			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(
-					serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
-			tempMap.putIfAbsent(StructureRegister.SMALL_DEN.get(),
-					DimensionStructuresSettings.field_236191_b_.get(StructureRegister.SMALL_DEN.get()));
+			Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(
+					serverWorld.getChunkSource().generator.getSettings().structureConfig());
+			/*tempMap.putIfAbsent(StructureRegister.SMALL_DEN.get(),
+					DimensionStructuresSettings.DEFAULTS.get(StructureRegister.SMALL_DEN.get()));*/
 		}
 	}
 
 	public void init(FMLCommonSetupEvent event) {
-		DeferredWorkQueue.runLater(() -> {
-		});
-	}*/
+		//DeferredWorkQueue.runLater(() -> {});
+	}
 
 	public void serverLoad(FMLServerStartingEvent event) {
 	}

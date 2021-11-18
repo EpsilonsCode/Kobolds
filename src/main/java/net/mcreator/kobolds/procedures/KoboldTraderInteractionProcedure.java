@@ -282,68 +282,6 @@ public class KoboldTraderInteractionProcedure {
 						MinecraftForge.EVENT_BUS.unregister(this);
 					}
 				}.start(world, 600);
-			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.BREAD) {
-				if ((new Object() {
-					public boolean checkGamemode(Entity _ent) {
-						if (_ent instanceof ServerPlayer _serverPlayer) {
-							return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-						} else if (_ent.level.isClientSide() && _ent instanceof AbstractClientPlayer _clientPlayer) {
-							PlayerInfo _pi = Minecraft.getInstance().getConnection().getPlayerInfo(_clientPlayer.getGameProfile().getId());
-							return _pi != null && _pi.getGameMode() == GameType.CREATIVE;
-						}
-						return false;
-					}
-				}.checkGamemode(sourceentity)) == false) {
-					if (sourceentity instanceof Player _player) {
-						ItemStack _stktoremove = new ItemStack(Items.BREAD);
-						_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
-								_player.inventoryMenu.getCraftSlots());
-					}
-				}
-				if (sourceentity instanceof LivingEntity _entity)
-					_entity.swing(InteractionHand.MAIN_HAND, true);
-				if (entity instanceof LivingEntity _entity)
-					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 120, -10, (false), (false)));
-				if (entity instanceof LivingEntity _entity) {
-					ItemStack _setstack = new ItemStack(Items.BREAD);
-					_setstack.setCount(1);
-					_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-					if (_entity instanceof ServerPlayer _serverPlayer)
-						_serverPlayer.getInventory().setChanged();
-				}
-				new Object() {
-					private int ticks = 0;
-					private float waitTicks;
-					private LevelAccessor world;
-
-					public void start(LevelAccessor world, int waitTicks) {
-						this.waitTicks = waitTicks;
-						MinecraftForge.EVENT_BUS.register(this);
-						this.world = world;
-					}
-
-					@SubscribeEvent
-					public void tick(TickEvent.ServerTickEvent event) {
-						if (event.phase == TickEvent.Phase.END) {
-							this.ticks += 1;
-							if (this.ticks >= this.waitTicks)
-								run();
-						}
-					}
-
-					private void run() {
-						if (entity instanceof LivingEntity _entity) {
-							ItemStack _setstack = (ItemStack.EMPTY);
-							_setstack.setCount(1);
-							_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-							if (_entity instanceof ServerPlayer _serverPlayer)
-								_serverPlayer.getInventory().setChanged();
-						}
-						if (entity instanceof LivingEntity _entity)
-							_entity.addEffect(new MobEffectInstance(MobEffects.HEAL, 12, 0));
-						MinecraftForge.EVENT_BUS.unregister(this);
-					}
-				}.start(world, 100);
 			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.APPLE
 					&& entity.getPersistentData().getDouble("TimerApple") == 0) {
 				if ((new Object() {
@@ -436,29 +374,94 @@ public class KoboldTraderInteractionProcedure {
 				}.start(world, 100);
 			}
 		}
-		if (entity instanceof AbstractKoboldEntity
-				&& ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.SHIELD) == false
-				&& ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY)
-						.getItem()) == true) {
-			if (sourceentity instanceof LivingEntity _entity)
-				_entity.swing(InteractionHand.MAIN_HAND, true);
-			if (world instanceof Level _level)
-				_level.playSound(_level.isClientSide() ? Minecraft.getInstance().player : null, (entity.getX()), (entity.getY()), (entity.getZ()),
-						ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_purr")), SoundSource.NEUTRAL, 1, 1);
-			if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
-					? _plr.getAdvancements()
-							.getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_pet_advancement")))
-							.isDone()
-					: false) == false) {
-				if (sourceentity instanceof ServerPlayer _player) {
-					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_pet_advancement"));
-					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-					if (!_ap.isDone()) {
-						Iterator _iterator = _ap.getRemainingCriteria().iterator();
-						while (_iterator.hasNext())
-							_player.getAdvancements().award(_adv, (String) _iterator.next());
+		if (entity instanceof AbstractKoboldEntity) {
+			if (!((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.SHIELD)
+					&& (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY)
+							.getItem()) {
+				if (sourceentity instanceof LivingEntity _entity)
+					_entity.swing(InteractionHand.MAIN_HAND, true);
+				if (world instanceof Level _level)
+					_level.playSound(_level.isClientSide() ? Minecraft.getInstance().player : null, (entity.getX()), (entity.getY()), (entity.getZ()),
+							ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_purr")), SoundSource.NEUTRAL, 1, 1);
+				if ((sourceentity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
+						? _plr.getAdvancements()
+								.getOrStartProgress(
+										_plr.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_pet_advancement")))
+								.isDone()
+						: false) == false) {
+					if (sourceentity instanceof ServerPlayer _player) {
+						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("kobolds:kobold_pet_advancement"));
+						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+						if (!_ap.isDone()) {
+							Iterator _iterator = _ap.getRemainingCriteria().iterator();
+							while (_iterator.hasNext())
+								_player.getAdvancements().award(_adv, (String) _iterator.next());
+						}
 					}
 				}
+			} else if (((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY)
+					.getItem()) == true
+					&& (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
+							.getItem() == Items.AMETHYST_SHARD) {
+				if ((new Object() {
+					public boolean checkGamemode(Entity _ent) {
+						if (_ent instanceof ServerPlayer _serverPlayer) {
+							return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+						} else if (_ent.level.isClientSide() && _ent instanceof AbstractClientPlayer _clientPlayer) {
+							PlayerInfo _pi = Minecraft.getInstance().getConnection().getPlayerInfo(_clientPlayer.getGameProfile().getId());
+							return _pi != null && _pi.getGameMode() == GameType.CREATIVE;
+						}
+						return false;
+					}
+				}.checkGamemode(sourceentity)) == false) {
+					if (sourceentity instanceof Player _player) {
+						ItemStack _stktoremove = new ItemStack(Items.AMETHYST_SHARD);
+						_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+								_player.inventoryMenu.getCraftSlots());
+					}
+				}
+				if (sourceentity instanceof LivingEntity _entity)
+					_entity.swing(InteractionHand.MAIN_HAND, true);
+				if (entity instanceof LivingEntity _entity) {
+					ItemStack _setstack = new ItemStack(Items.AMETHYST_SHARD);
+					_setstack.setCount(1);
+					_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
+					if (_entity instanceof ServerPlayer _serverPlayer)
+						_serverPlayer.getInventory().setChanged();
+				}
+				new Object() {
+					private int ticks = 0;
+					private float waitTicks;
+					private LevelAccessor world;
+
+					public void start(LevelAccessor world, int waitTicks) {
+						this.waitTicks = waitTicks;
+						MinecraftForge.EVENT_BUS.register(this);
+						this.world = world;
+					}
+
+					@SubscribeEvent
+					public void tick(TickEvent.ServerTickEvent event) {
+						if (event.phase == TickEvent.Phase.END) {
+							this.ticks += 1;
+							if (this.ticks >= this.waitTicks)
+								run();
+						}
+					}
+
+					private void run() {
+						if (entity instanceof LivingEntity _entity) {
+							ItemStack _setstack = (ItemStack.EMPTY);
+							_setstack.setCount(1);
+							_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
+							if (_entity instanceof ServerPlayer _serverPlayer)
+								_serverPlayer.getInventory().setChanged();
+						}
+						if (entity instanceof LivingEntity _entity)
+							_entity.addEffect(new MobEffectInstance(MobEffects.HEAL, 12, 0));
+						MinecraftForge.EVENT_BUS.unregister(this);
+					}
+				}.start(world, 21);
 			}
 		}
 	}

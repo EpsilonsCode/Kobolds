@@ -12,7 +12,7 @@ public class KoboldIronShovelItem extends ShovelItem {
 	public KoboldIronShovelItem() {
 		super(new Tier() {
 			public int getUses() {
-				return 250;
+				return 256;
 			}
 
 			public float getSpeed() {

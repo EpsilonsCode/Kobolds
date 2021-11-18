@@ -394,7 +394,8 @@ public class KoboldEnchanterInteractionProcedure {
 							if (Math.random() <= 0.1) {
 								if (world instanceof Level _level)
 									_level.playSound(_level.isClientSide() ? Minecraft.getInstance().player : null, (entity.getX()), (entity.getY()),
-											(entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_idle")),
+											(entity.getZ()),
+											ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.converted")),
 											SoundSource.NEUTRAL, 1, 1);
 								if (world instanceof ServerLevel _level) {
 									Entity entityToSpawn = new KoboldEngineerEntity(KoboldsModEntities.KOBOLD_ENGINEER, _level);
@@ -442,7 +443,8 @@ public class KoboldEnchanterInteractionProcedure {
 						} else {
 							if (world instanceof Level _level)
 								_level.playSound(_level.isClientSide() ? Minecraft.getInstance().player : null, (entity.getX()), (entity.getY()),
-										(entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("kobolds:kobold_idle")),
+										(entity.getZ()),
+										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie_villager.converted")),
 										SoundSource.NEUTRAL, 1, 1);
 							if (world instanceof ServerLevel _level) {
 								Entity entityToSpawn = new KoboldEntity(KoboldsModEntities.KOBOLD, _level);

@@ -14,7 +14,7 @@ public class KoboldIronPickaxeItem extends PickaxeItem {
 	public KoboldIronPickaxeItem() {
 		super(new Tier() {
 			public int getUses() {
-				return 250;
+				return 256;
 			}
 
 			public float getSpeed() {
@@ -26,7 +26,7 @@ public class KoboldIronPickaxeItem extends PickaxeItem {
 			}
 
 			public int getLevel() {
-				return 1;
+				return 3;
 			}
 
 			public int getEnchantmentValue() {

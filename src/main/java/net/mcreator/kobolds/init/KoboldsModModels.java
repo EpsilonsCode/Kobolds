@@ -12,6 +12,7 @@ import net.mcreator.kobolds.client.model.SkeleboldModel;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class KoboldsModModels {
+	
 	@SubscribeEvent
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(KoboldModel.KOBOLD_MODEL, KoboldModel::createBodyLayer);

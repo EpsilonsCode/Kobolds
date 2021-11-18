@@ -124,8 +124,7 @@ public class KoboldBaseTickProcedure {
 						MinecraftForge.EVENT_BUS.unregister(this);
 					}
 				}.start(world, 5);
-			} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
-					.getItem() == KoboldsModItems.KOBOLD_IRON_AXE) {
+			} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.SHIELD) {
 				entity.getPersistentData().putDouble("TimerHeal", 6000);
 				new Object() {
 					private int ticks = 0;
@@ -237,6 +236,16 @@ public class KoboldBaseTickProcedure {
 				ItemStack _setstack = (ItemStack.EMPTY);
 				_setstack.setCount(1);
 				_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
+				if (_entity instanceof ServerPlayer _serverPlayer)
+					_serverPlayer.getInventory().setChanged();
+			}
+		} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.TRIDENT
+				&& !((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY)
+						.getItem())) {
+			if (entity instanceof LivingEntity _entity) {
+				ItemStack _setstack = (ItemStack.EMPTY);
+				_setstack.setCount(1);
+				_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
 				if (_entity instanceof ServerPlayer _serverPlayer)
 					_serverPlayer.getInventory().setChanged();
 			}

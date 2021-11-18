@@ -14,7 +14,7 @@ public class KoboldIronSwordItem extends SwordItem {
 	public KoboldIronSwordItem() {
 		super(new Tier() {
 			public int getUses() {
-				return 250;
+				return 256;
 			}
 
 			public float getSpeed() {

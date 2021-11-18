@@ -218,7 +218,7 @@ public class KoboldEngineerInteractionProcedure {
 				}
 			}.start(world, 100);
 		} else if (entity instanceof KoboldChildEntity
-				&& (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.COOKIE) {
+				&& (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.AMETHYST_SHARD) {
 			if ((new Object() {
 				public boolean checkGamemode(Entity _ent) {
 					if (_ent instanceof ServerPlayer _serverPlayer) {
@@ -231,14 +231,14 @@ public class KoboldEngineerInteractionProcedure {
 				}
 			}.checkGamemode(sourceentity)) == false) {
 				if (sourceentity instanceof Player _player) {
-					ItemStack _stktoremove = new ItemStack(Items.COOKIE);
+					ItemStack _stktoremove = new ItemStack(Items.AMETHYST_SHARD);
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
 							_player.inventoryMenu.getCraftSlots());
 				}
 			}
 			if (sourceentity instanceof LivingEntity _entity)
 				_entity.swing(InteractionHand.MAIN_HAND, true);
-			entity.getPersistentData().putDouble("TimerGrow", (entity.getPersistentData().getDouble("TimerGrow") + 100));
+			entity.getPersistentData().putDouble("TimerGrow", (entity.getPersistentData().getDouble("TimerGrow") + 256));
 		}
 	}
 }

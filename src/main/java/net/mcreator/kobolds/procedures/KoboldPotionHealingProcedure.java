@@ -13,10 +13,10 @@ public class KoboldPotionHealingProcedure {
 	public static void execute(Map<String, Object> dependencies) {
 		Entity entity = (Entity) dependencies.get("entity");
 		if (entity.isAlive()) {
-			if (entity instanceof LivingEntity livingentity) {
-				livingentity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
-				livingentity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 360, 0));
-			}
+			if (entity instanceof LivingEntity _entity)
+				_entity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
+			if (entity instanceof LivingEntity _entity)
+				_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 360, 0));
 		}
 	}
 }

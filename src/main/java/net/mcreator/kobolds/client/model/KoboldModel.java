@@ -26,12 +26,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> implements ArmedModel, HeadedModel {
 	public static final ModelLayerLocation KOBOLD_MODEL = new ModelLayerLocation(new ResourceLocation("kobolds", "kobold"), "main");
-	private final ModelPart head;
-	private final ModelPart rightarm;
-	private final ModelPart leftarm;
-	private final ModelPart rightleg;
-	private final ModelPart leftleg;
-	private final ModelPart body;
+	public final ModelPart head;
+	public final ModelPart rightarm;
+	public final ModelPart leftarm;
+	public final ModelPart rightleg;
+	public final ModelPart leftleg;
+	public final ModelPart body;
 
 	public KoboldModel(ModelPart root) {
 		this.head = root.getChild("head");
@@ -218,6 +218,15 @@ public class KoboldModel<T extends AbstractKoboldEntity> extends EntityModel<T> 
 				}
 			}
 		}
+	}
+
+	public void setAllVisible(boolean atlas) {
+		this.head.visible = atlas;
+		this.body.visible = atlas;
+		this.rightarm.visible = atlas;
+		this.leftarm.visible = atlas;
+		this.rightleg.visible = atlas;
+		this.leftleg.visible = atlas;
 	}
 
 	@Override

@@ -27,25 +27,13 @@ import net.minecraft.client.Minecraft;
 import net.mcreator.kobolds.init.KoboldsModItems;
 import net.mcreator.kobolds.init.KoboldsModEntities;
 import net.mcreator.kobolds.entity.KoboldChildEntity;
-import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Random;
-import java.util.Map;
 
 public class KoboldBaseTickProcedure {
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldBaseTick!");
+	public static void execute(LevelAccessor world, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure KoboldBaseTick!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		LevelAccessor world = (LevelAccessor) dependencies.get("world");
 		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) < 12 && entity.getPersistentData().getDouble("TimerHeal") == 0) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.TRIDENT) {
 				entity.getPersistentData().putDouble("TimerHeal", 120);

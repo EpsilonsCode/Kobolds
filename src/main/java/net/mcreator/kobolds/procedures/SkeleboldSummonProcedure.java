@@ -17,36 +17,9 @@ import net.minecraft.core.BlockPos;
 
 import net.mcreator.kobolds.init.KoboldsModEntities;
 import net.mcreator.kobolds.entity.SkeleboldEntity;
-import net.mcreator.kobolds.KoboldsMod;
-
-import java.util.Map;
 
 public class SkeleboldSummonProcedure {
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency x for procedure SkeleboldSummon!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency y for procedure SkeleboldSummon!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency z for procedure SkeleboldSummon!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure SkeleboldSummon!");
-			return;
-		}
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		LevelAccessor world = (LevelAccessor) dependencies.get("world");
+	public static void execute(LevelAccessor world, double x, double y, double z) {
 		if (world.canSeeSkyFromBelowWater(new BlockPos((int) (Math.floor(x)), (int) (Math.floor(y)), (int) (Math.floor(z))))
 				&& !(world instanceof Level _lvl ? _lvl.isDay() : false)
 				&& (world.getDifficulty() == Difficulty.NORMAL || world.getDifficulty() == Difficulty.HARD)) {

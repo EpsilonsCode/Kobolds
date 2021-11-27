@@ -1,8 +1,15 @@
-package net.mcreator.kobolds.entity;
+
+package net.mcreator.kobolds.entity;
 
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -21,7 +28,6 @@ public class KoboldEngineerEntity extends AbstractKoboldEntity {
 
 	public KoboldEngineerEntity(EntityType<KoboldEngineerEntity> type, Level world) {
 		super(type, world);
-		this.setCanPickUpLoot(false);
 	}
 
 	@Override
@@ -33,6 +39,46 @@ public class KoboldEngineerEntity extends AbstractKoboldEntity {
 	}
 
 	public static void init() {
+	}
+
+	@Override
+	protected boolean canReplaceCurrentItem(ItemStack item, ItemStack stack) {
+		if (stack.isEmpty()) {
+			return true;
+		} else if (item.getItem() instanceof CrossbowItem && stack.getItem() instanceof CrossbowItem) {
+			return this.canReplaceEqualItem(item, stack);
+		} else if (item.getItem() instanceof ArmorItem) {
+			if (EnchantmentHelper.hasBindingCurse(stack)) {
+				return false;
+			} else if (!(stack.getItem() instanceof ArmorItem)) {
+				return true;
+			} else {
+				ArmorItem armoritem = (ArmorItem) item.getItem();
+				ArmorItem armoritem1 = (ArmorItem) stack.getItem();
+				if (armoritem.getDefense() != armoritem1.getDefense()) {
+					return armoritem.getDefense() > armoritem1.getDefense();
+				} else if (armoritem.getToughness() != armoritem1.getToughness()) {
+					return armoritem.getToughness() > armoritem1.getToughness();
+				} else {
+					return this.canReplaceEqualItem(item, stack);
+				}
+			}
+		} else {
+			if (item.getItem() instanceof DiggerItem) {
+				if (stack.getItem() instanceof BlockItem) {
+					return true;
+				}
+				if (stack.getItem() instanceof DiggerItem) {
+					DiggerItem diggeritem = (DiggerItem) item.getItem();
+					DiggerItem diggeritem1 = (DiggerItem) stack.getItem();
+					if (diggeritem.getAttackDamage() != diggeritem1.getAttackDamage()) {
+						return diggeritem.getAttackDamage() > diggeritem1.getAttackDamage();
+					}
+					return this.canReplaceEqualItem(item, stack);
+				}
+			}
+			return false;
+		}
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

@@ -17,8 +17,6 @@ import net.mcreator.kobolds.procedures.KoboldBaseTickChildProcedure;
 import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 import net.mcreator.kobolds.init.KoboldsModEntities;
 
-import com.google.common.collect.ImmutableMap;
-
 public class KoboldChildEntity extends AbstractKoboldEntity {
 	public KoboldChildEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
 		this(KoboldsModEntities.KOBOLD_CHILD, world);
@@ -63,6 +61,6 @@ public class KoboldChildEntity extends AbstractKoboldEntity {
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level;
-		KoboldBaseTickChildProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
+		KoboldBaseTickChildProcedure.execute(world, entity);
 	}
 }

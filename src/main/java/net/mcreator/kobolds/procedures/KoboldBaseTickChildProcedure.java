@@ -17,24 +17,11 @@ import net.mcreator.kobolds.entity.KoboldEntity;
 import net.mcreator.kobolds.entity.KoboldEngineerEntity;
 import net.mcreator.kobolds.entity.KoboldEnchanterEntity;
 import net.mcreator.kobolds.entity.KoboldCaptainEntity;
-import net.mcreator.kobolds.KoboldsMod;
-
-import java.util.Map;
 
 public class KoboldBaseTickChildProcedure {
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldBaseTickChild!");
+	public static void execute(LevelAccessor world, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure KoboldBaseTickChild!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		LevelAccessor world = (LevelAccessor) dependencies.get("world");
 		if (entity.getPersistentData().getDouble("TimerGrow") < 24000) {
 			entity.getPersistentData().putDouble("TimerGrow", (entity.getPersistentData().getDouble("TimerGrow") + 1));
 		} else if (entity.getPersistentData().getDouble("TimerGrow") >= 24000) {

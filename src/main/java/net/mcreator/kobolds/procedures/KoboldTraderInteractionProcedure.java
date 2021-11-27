@@ -3,6 +3,7 @@ package net.mcreator.kobolds.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -42,50 +43,28 @@ import net.mcreator.kobolds.init.KoboldsModEntities;
 import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 import net.mcreator.kobolds.entity.KoboldWarriorEntity;
 import net.mcreator.kobolds.entity.KoboldEntity;
-import net.mcreator.kobolds.KoboldsMod;
 
-import java.util.Map;
+import javax.annotation.Nullable;
+
 import java.util.Iterator;
-import java.util.HashMap;
 
 @Mod.EventBusSubscriber
 public class KoboldTraderInteractionProcedure {
 	@SubscribeEvent
 	public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
 		Player sourceentity = event.getPlayer();
-		if (event.getHand() != sourceentity.getUsedItemHand()) {
+		if (event.getHand() != sourceentity.getUsedItemHand())
 			return;
-		}
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", event.getPos().getX());
-		dependencies.put("y", event.getPos().getY());
-		dependencies.put("z", event.getPos().getZ());
-		dependencies.put("world", event.getWorld());
-		dependencies.put("entity", event.getTarget());
-		dependencies.put("sourceentity", sourceentity);
-		dependencies.put("event", event);
-		execute(dependencies);
+		execute(event, event.getWorld(), event.getTarget(), sourceentity);
 	}
 
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldTraderInteraction!");
+	public static void execute(LevelAccessor world, Entity entity, Entity sourceentity) {
+		execute(null, world, entity, sourceentity);
+	}
+
+	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity, Entity sourceentity) {
+		if (entity == null || sourceentity == null)
 			return;
-		}
-		if (dependencies.get("sourceentity") == null) {
-			if (!dependencies.containsKey("sourceentity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency sourceentity for procedure KoboldTraderInteraction!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure KoboldTraderInteraction!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		Entity sourceentity = (Entity) dependencies.get("sourceentity");
-		LevelAccessor world = (LevelAccessor) dependencies.get("world");
 		if (EntityTypeTags.getAllTags().getTagOrEmpty(new ResourceLocation("kobolds:trader")).contains(entity.getType())
 				&& ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == (ItemStack.EMPTY)
 						.getItem()) == true) {

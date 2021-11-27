@@ -16,24 +16,11 @@ import net.minecraft.client.Minecraft;
 
 import net.mcreator.kobolds.init.KoboldsModEntities;
 import net.mcreator.kobolds.entity.DrownedZomboldEntity;
-import net.mcreator.kobolds.KoboldsMod;
-
-import java.util.Map;
 
 public class ZomboldBaseTickProcedure {
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure ZomboldBaseTick!");
+	public static void execute(LevelAccessor world, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure ZomboldBaseTick!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		LevelAccessor world = (LevelAccessor) dependencies.get("world");
 		if (entity.getPersistentData().getDouble("Drown") < 600) {
 			if (entity.isInWater()
 					&& ((world.getBlockState(new BlockPos((int) (entity.getX() - 1), (int) (entity.getY() + 1), (int) (entity.getZ() - 1))))

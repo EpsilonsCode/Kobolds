@@ -17,30 +17,11 @@ import net.minecraft.client.Minecraft;
 
 import net.mcreator.kobolds.init.KoboldsModEntities;
 import net.mcreator.kobolds.entity.ZomboldEntity;
-import net.mcreator.kobolds.KoboldsMod;
-
-import java.util.Map;
 
 public class KoboldDeathProcedure {
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldDeath!");
+	public static void execute(LevelAccessor world, Entity entity, Entity sourceentity) {
+		if (entity == null || sourceentity == null)
 			return;
-		}
-		if (dependencies.get("sourceentity") == null) {
-			if (!dependencies.containsKey("sourceentity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency sourceentity for procedure KoboldDeath!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency world for procedure KoboldDeath!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		Entity sourceentity = (Entity) dependencies.get("sourceentity");
-		LevelAccessor world = (LevelAccessor) dependencies.get("world");
 		if (sourceentity instanceof Zombie && !(entity instanceof LivingEntity _livEnt ? _livEnt.isBaby() : false)) {
 			if (world.getDifficulty() == Difficulty.HARD) {
 				if (!entity.level.isClientSide())

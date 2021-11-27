@@ -14,19 +14,13 @@ import net.mcreator.kobolds.init.KoboldsModItems;
 import net.mcreator.kobolds.entity.SkeleboldEntity;
 import net.mcreator.kobolds.entity.KoboldPirateEntity;
 import net.mcreator.kobolds.entity.KoboldCaptainEntity;
-import net.mcreator.kobolds.KoboldsMod;
 
 import java.util.Random;
-import java.util.Map;
 
 public class KoboldSpawnProcedure {
-	public static void execute(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				KoboldsMod.LOGGER.warn("Failed to load dependency entity for procedure KoboldSpawn!");
+	public static void execute(Entity entity) {
+		if (entity == null)
 			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
 		if (entity instanceof KoboldCaptainEntity) {
 			if (entity instanceof LivingEntity _entity) {
 				ItemStack _setstack = (EnchantmentHelper.enchantItem(new Random(), new ItemStack(KoboldsModItems.KOBOLD_IRON_SWORD), 30, (false)));

@@ -55,8 +55,6 @@ import net.mcreator.kobolds.goal.KoboldRevengeGoal;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableMap;
-
 public abstract class AbstractKoboldEntity extends Monster implements CrossbowAttackMob, RangedAttackMob {
 	protected AbstractKoboldEntity(EntityType<? extends Monster> type, Level world) {
 		super(type, world);
@@ -186,8 +184,7 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		Level world = this.level;
 		if (source.getDirectEntity() instanceof Zombie) {
 			Zombie zombie = (Zombie) source.getDirectEntity();
-			KoboldDeathProcedure
-					.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("sourceentity", zombie).put("world", world).build());
+			KoboldDeathProcedure.execute(world, entity, zombie);
 		}
 	}
 
@@ -199,7 +196,8 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		double y = this.getY();
 		double z = this.getZ();
 		Entity entity = this;
-		KoboldSpawnProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).build());
+
+		KoboldSpawnProcedure.execute(entity);
 		return retval;
 	}
 
@@ -211,7 +209,8 @@ public abstract class AbstractKoboldEntity extends Monster implements CrossbowAt
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level;
-		KoboldBaseTickProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
+
+		KoboldBaseTickProcedure.execute(world, entity);
 	}
 
 	@Override

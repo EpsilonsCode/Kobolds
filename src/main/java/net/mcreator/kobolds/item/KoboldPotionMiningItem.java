@@ -23,14 +23,10 @@ import net.mcreator.kobolds.init.KoboldsModTabs;
 
 import java.util.List;
 
-import com.google.common.collect.ImmutableMap;
-
 public class KoboldPotionMiningItem extends MilkBucketItem {
 	public KoboldPotionMiningItem() {
 		super(new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB).stacksTo(16).rarity(Rarity.RARE)
-				.food((new FoodProperties.Builder()).nutrition(0).saturationMod(0f).alwaysEat()
-
-						.build()));
+				.food((new FoodProperties.Builder()).nutrition(0).saturationMod(0f).alwaysEat().build()));
 		setRegistryName("kobold_potion_mining");
 	}
 
@@ -58,8 +54,7 @@ public class KoboldPotionMiningItem extends MilkBucketItem {
 		double x = entity.getX();
 		double y = entity.getY();
 		double z = entity.getZ();
-
-		KoboldPotionHasteProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).build());
+		KoboldPotionHasteProcedure.execute(entity);
 		if (itemstack.isEmpty()) {
 			return retval;
 		} else {

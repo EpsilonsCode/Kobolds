@@ -32,8 +32,6 @@ import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 import java.util.Set;
 
-import com.google.common.collect.ImmutableMap;
-
 @Mod.EventBusSubscriber
 public class ZomboldEntity extends Zombie {
 	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("swamp"), new ResourceLocation("swamp_hills"));
@@ -76,7 +74,7 @@ public class ZomboldEntity extends Zombie {
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level;
-		ZomboldBaseTickProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).put("world", world).build());
+		ZomboldBaseTickProcedure.execute(world, entity);
 	}
 
 	protected boolean convertsInWater() {

@@ -4,8 +4,13 @@ package net.mcreator.kobolds.entity;
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.Spider;
@@ -21,7 +26,6 @@ import net.minecraft.world.entity.EntityType;
 
 import net.mcreator.kobolds.init.KoboldsModItems;
 import net.mcreator.kobolds.init.KoboldsModEntities;
-import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 public class KoboldWarriorEntity extends AbstractKoboldEntity {
 	public KoboldWarriorEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
@@ -46,6 +50,56 @@ public class KoboldWarriorEntity extends AbstractKoboldEntity {
 	}
 
 	public static void init() {
+	}
+
+	@Override
+	protected boolean canReplaceCurrentItem(ItemStack item, ItemStack stack) {
+		if (stack.isEmpty()) {
+			return true;
+		} else if (item.getItem() instanceof AxeItem) {
+			if (!(stack.getItem() instanceof AxeItem)) {
+				return true;
+			} else {
+				AxeItem sworditem = (AxeItem) item.getItem();
+				AxeItem sworditem1 = (AxeItem) stack.getItem();
+				if (sworditem.getAttackDamage() != sworditem1.getAttackDamage()) {
+					return sworditem.getAttackDamage() > sworditem1.getAttackDamage();
+				} else {
+					return this.canReplaceEqualItem(item, stack);
+				}
+			}
+		} else if (item.getItem() instanceof ArmorItem) {
+			if (EnchantmentHelper.hasBindingCurse(stack)) {
+				return false;
+			} else if (!(stack.getItem() instanceof ArmorItem)) {
+				return true;
+			} else {
+				ArmorItem armoritem = (ArmorItem) item.getItem();
+				ArmorItem armoritem1 = (ArmorItem) stack.getItem();
+				if (armoritem.getDefense() != armoritem1.getDefense()) {
+					return armoritem.getDefense() > armoritem1.getDefense();
+				} else if (armoritem.getToughness() != armoritem1.getToughness()) {
+					return armoritem.getToughness() > armoritem1.getToughness();
+				} else {
+					return this.canReplaceEqualItem(item, stack);
+				}
+			}
+		} else {
+			if (item.getItem() instanceof DiggerItem) {
+				if (stack.getItem() instanceof BlockItem) {
+					return true;
+				}
+				if (stack.getItem() instanceof DiggerItem) {
+					DiggerItem diggeritem = (DiggerItem) item.getItem();
+					DiggerItem diggeritem1 = (DiggerItem) stack.getItem();
+					if (diggeritem.getAttackDamage() != diggeritem1.getAttackDamage()) {
+						return diggeritem.getAttackDamage() > diggeritem1.getAttackDamage();
+					}
+					return this.canReplaceEqualItem(item, stack);
+				}
+			}
+			return false;
+		}
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

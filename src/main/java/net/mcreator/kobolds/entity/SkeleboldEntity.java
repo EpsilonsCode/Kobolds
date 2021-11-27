@@ -38,8 +38,6 @@ import net.mcreator.kobolds.entity.AbstractKoboldEntity;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableMap;
-
 public class SkeleboldEntity extends Skeleton implements CrossbowAttackMob, RangedAttackMob {
 	public SkeleboldEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
 		this(KoboldsModEntities.SKELEBOLD, world);
@@ -96,7 +94,8 @@ public class SkeleboldEntity extends Skeleton implements CrossbowAttackMob, Rang
 		double y = this.getY();
 		double z = this.getZ();
 		Entity entity = this;
-		KoboldSpawnProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).build());
+
+		KoboldSpawnProcedure.execute(entity);
 		return retval;
 	}
 

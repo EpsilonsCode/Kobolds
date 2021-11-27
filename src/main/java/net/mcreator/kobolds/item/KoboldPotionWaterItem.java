@@ -23,8 +23,6 @@ import net.mcreator.kobolds.init.KoboldsModTabs;
 
 import java.util.List;
 
-import com.google.common.collect.ImmutableMap;
-
 public class KoboldPotionWaterItem extends MilkBucketItem {
 	public KoboldPotionWaterItem() {
 		super(new Item.Properties().tab(KoboldsModTabs.TAB_KOBOLD_CREATIVE_TAB).stacksTo(16).rarity(Rarity.RARE)
@@ -56,7 +54,7 @@ public class KoboldPotionWaterItem extends MilkBucketItem {
 		double x = entity.getX();
 		double y = entity.getY();
 		double z = entity.getZ();
-		KoboldPotionWaterBreatheProcedure.execute(ImmutableMap.<String, Object>builder().put("entity", entity).build());
+		KoboldPotionWaterBreatheProcedure.execute(entity);
 		if (itemstack.isEmpty()) {
 			return retval;
 		} else {

@@ -42,8 +42,6 @@ import java.util.Random;
 import java.util.List;
 import java.util.Collections;
 
-import com.google.common.collect.ImmutableMap;
-
 public class KoboldBlockSkullBlock extends Block implements SimpleWaterloggedBlock
 
 {
@@ -138,8 +136,7 @@ public class KoboldBlockSkullBlock extends Block implements SimpleWaterloggedBlo
 	public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
 		super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
 		if (world.getBestNeighborSignal(pos) > 0) {
-			SkeleboldSummonProcedure.execute(ImmutableMap.<String, Object>builder().put("x", pos.getX()).put("y", pos.getY()).put("z", pos.getZ())
-					.put("world", world).build());
+			SkeleboldSummonProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
 
@@ -150,7 +147,7 @@ public class KoboldBlockSkullBlock extends Block implements SimpleWaterloggedBlo
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		SkeleboldSummonProcedure.execute(ImmutableMap.<String, Object>builder().put("x", x).put("y", y).put("z", z).put("world", world).build());
+		SkeleboldSummonProcedure.execute(world, x, y, z);
 	}
 
 	@OnlyIn(Dist.CLIENT)

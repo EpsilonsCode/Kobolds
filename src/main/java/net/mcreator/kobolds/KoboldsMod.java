@@ -13,6 +13,7 @@
  */
 package net.mcreator.kobolds;
 
+import net.mcreator.kobolds.init.KoboldsModStructures;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -41,6 +42,7 @@ public class KoboldsMod {
 
 	public KoboldsMod() {
 		KoboldsModTabs.load();
+		KoboldsModStructures.initElements();
 	}
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder,

@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.InteractionHand;
 
 import net.mcreator.kobolds.entity.AbstractKoboldEntity;
+import net.minecraft.world.item.Items;
 
 public class KoboldShieldGoal extends Goal {
 	public final AbstractKoboldEntity kobold;
@@ -17,7 +18,7 @@ public class KoboldShieldGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return kobold.getOffhandItem().getItem().isShield(kobold.getOffhandItem(), kobold) && raiseShield();
+		return kobold.getOffhandItem().getItem() == Items.SHIELD && raiseShield();
 	}
 
 	@Override
@@ -27,7 +28,7 @@ public class KoboldShieldGoal extends Goal {
 
 	@Override
 	public void start() {
-		if (kobold.getOffhandItem().getItem().isShield(kobold.getOffhandItem(), kobold))
+		if (kobold.getOffhandItem().getItem() == Items.SHIELD)
 			kobold.startUsingItem(InteractionHand.OFF_HAND);
 	}
 
@@ -52,4 +53,4 @@ public class KoboldShieldGoal extends Goal {
 				return false;
 			}
 	}
-}
+}
